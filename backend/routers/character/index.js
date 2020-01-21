@@ -54,6 +54,7 @@ router.post('/set', async (req, res, next) => {
     //  I ALSO NEED TO CREATE THE SET INSIDE THE CHARACTER MODEL
     //
     const { charId, from, to } = req.body;
+    console.log(to);
     try {
         let character = await Character.findById(charId);
         if(!character) {
@@ -80,7 +81,8 @@ router.post('/set', async (req, res, next) => {
         }
         if(newItemSet.type !== to.position && to.position !== 'weapon1' && to.position !== 'weapon2') {
             if(newItemSet !== 0) {
-               res.json({
+                console.log(to, newItemSet);
+                res.json({
                     error: `This slot only accept ${to.position} items.`
                 });
                 return; 

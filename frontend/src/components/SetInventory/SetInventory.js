@@ -39,7 +39,7 @@ const SetInventory = props => {
             },
             to: {
                 location: data.location,
-                position: +data.position,
+                position: data.position,
                 quantity: data.quantity? +data.quantity: 0
             }
         }

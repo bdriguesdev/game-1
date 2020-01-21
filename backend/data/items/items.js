@@ -6,7 +6,7 @@ const items = [
     {
         id: 0,
         name: 'Body Armour',
-        type: 'body',
+        type: 'bodyArmour',
         price: 1,
         maxStack: 1,
         quantity: 1,

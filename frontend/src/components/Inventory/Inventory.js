@@ -1,6 +1,7 @@
 import React, { useState, useContext } from 'react';
 
 import './Inventory.css';
+import images from '../../utils/images';
 import MainContext from '../../contexts/MainContext';
 
 const Inventory = props => {
@@ -10,7 +11,7 @@ const Inventory = props => {
     const { charId, charInfo, setCharInfo } = useContext(MainContext);
 
     const handleDragStart = (evt, data) => {
-        console.log('start');
+        handleMouseOut();
         evt.dataTransfer.setData('location', data.location);
         evt.dataTransfer.setData('position', data.position);
         evt.dataTransfer.setData('quantity', data.quantity);
@@ -100,7 +101,7 @@ const Inventory = props => {
     const handleMouseOver = (evt, slot) => {
         const { target } = evt;
         const details = document.getElementById('details');
-        if(slot !== 0 && target.tagName === 'LI') {
+        if(slot !== 0) {
             details.style.top = `${target.offsetTop - 10}px`
             details.style.left = `${target.offsetLeft + 45}px`
             setItemInfo(slot);
@@ -118,6 +119,7 @@ const Inventory = props => {
                 {
                     itemInfo && ([
                         <p key='item-name'>{itemInfo.name}</p>,
+                        <p key='item-type'>{itemInfo.type}</p>,
                         <p key='item-tier'>{itemInfo.tier}</p>
                     ])
                 }
@@ -136,10 +138,10 @@ const Inventory = props => {
                                 key={index}
                                 onDragOver={handleDragOver}
                                 onDrop={evt => handleDrop(evt, { location: 'inventory', position: index, quantity: slot.quantity })}
-                                onMouseOver={evt => handleMouseOver(evt, slot)}
-                                onMouseOut={handleMouseOut}
+                                onMouseEnter={evt => handleMouseOver(evt, slot)}
+                                onMouseLeave={handleMouseOut}
                             >
-                                {slot === 0? 0: (<p onDragStart={evt => handleDragStart(evt, { location: 'inventory', position: index, quantity: slot.quantity })} draggable='true'>1</p>)}
+                                {slot === 0? 0: (<p style={{ backgroundImage: `url('${images[slot.id]}')` }} onMouseEnter={evt => handleMouseOver(evt, slot)} onDragStart={evt => handleDragStart(evt, { location: 'inventory', position: index, quantity: slot.quantity })} draggable='true'></p>)}
                             </li>
                         );
                     })

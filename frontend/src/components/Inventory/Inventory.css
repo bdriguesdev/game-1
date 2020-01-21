@@ -18,6 +18,16 @@
     box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.384);
 }
 
+.inventory-slot p {
+    color: red;
+    margin: 0;
+    background-image: var(--item-url);
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+}
+
 .inventory-slot:nth-child(4n + 0) {
     margin-right: 0px;
 }
