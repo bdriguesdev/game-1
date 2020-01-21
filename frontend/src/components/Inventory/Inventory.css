@@ -1,0 +1,35 @@
+.inventory-slots {
+    list-style-type: none;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    width: 177px;
+    height: 177px;
+    flex-wrap: wrap;
+}
+.inventory-slot {
+    background-color: #111A2E;
+    width: 38px;
+    height: 38px;
+    margin-right: 5px;
+    margin-bottom: 5px;
+    border-radius: 15px;
+    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.384);
+}
+
+.inventory-slot:nth-child(4n + 0) {
+    margin-right: 0px;
+}
+
+.inventory-slot:nth-child(n + 13) {
+    margin-bottom: 0px;
+}
+
+.inventory-details {
+    color: black;
+    background-color: white;
+    position: absolute;
+    top: 0;
+    left: 0;
+}

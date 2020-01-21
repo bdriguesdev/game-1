@@ -1,0 +1,21 @@
+.login {
+    background-color: #0A1121;
+    width: 100%;
+    color: white;
+}
+.login p {
+    padding: 3px 0;
+    font-weight: 200;
+    font-size: 14px;
+}
+.login a {
+    text-decoration: none;
+    display: block;
+    margin: 10px auto;
+    height: 40px;
+}
+
+.login a span {
+    position: relative;
+    top: 11px;
+}

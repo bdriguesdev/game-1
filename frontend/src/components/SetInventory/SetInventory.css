@@ -1,0 +1,24 @@
+.set-container ul {
+    list-style-type: none;
+    padding: 0;
+    width: 129px;
+}
+
+.set-container ul li {
+    width: 38px;
+    height: 38px;
+    background-color: #111A2E;
+    margin-right: 5px;
+    margin-bottom: 5px;
+    border-radius: 15px;
+    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.384);
+    display: inline-block;
+}
+
+.set-container ul li:nth-child(3n + 0) {
+    margin-right: 0;
+}
+
+.set-container ul li:nth-child(n + 10) {
+    margin-bottom: 0;
+}

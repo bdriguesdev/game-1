@@ -1,0 +1,11 @@
+.register {
+    background-color: #0A1121;
+    width: 100%;
+    color: white;
+}
+
+form {
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+}

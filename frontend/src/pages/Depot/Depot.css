@@ -1,0 +1,29 @@
+.depot-container {
+    background-color: #0A1121;
+    width: 100%;
+    color: white;
+}
+
+.depot-container h1 {
+    margin-top: 5rem;
+    margin-bottom: 3rem;
+}
+
+.depot-boxes {
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    background-color: #0C1529;
+    width: 550px;
+    padding: 20px;
+    border-radius: 35px;
+}
+
+.depot-inventory-box {
+    margin-right: 20px
+}
+
+.depot-box {
+    margin-left: 10px;
+}
+

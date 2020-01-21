@@ -1,0 +1,14 @@
+.health-bar-container {
+    background: lightblue;
+    width: 85%;
+    height: 15px;
+    border-radius: 50px;
+    margin: 10px auto;
+}
+
+.health-bar {
+    background: #9E2828;
+    width: 100%;
+    height: 15px;
+    border-radius: 50px;
+}

@@ -1,0 +1,14 @@
+.energy-bar-container {
+    background: lightblue;
+    width: 85%;
+    height: 15px;
+    border-radius: 50px;
+    margin: 10px auto;
+}
+
+.energy-bar {
+    background-color: #E9B80E;
+    width: 100%;
+    height: 15px;
+    border-radius: 50px;
+}

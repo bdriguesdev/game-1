@@ -1,0 +1,97 @@
+.battlefield {
+    background-color: #0A1121;
+    width: 100%;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.battle-container{
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 100%;
+}
+
+.versus-img {
+    font-size: 100px;
+    font-weight: 100;
+    margin: 0 5vw;
+}
+
+.battlefield {
+    display: block;
+}
+
+.physical-attack {
+    position: relative;
+    color: lightgray;
+    top: 15px;
+    left: 80px;
+    animation-name: physical;
+    animation-duration: 1s;
+    animation-iteration-count: 1;
+    animation-timing-function: ease-in-out;
+    opacity: 0;
+}
+
+.fire-attack {
+    position: relative; 
+    color: red;
+    top: 20px;
+    left: 90px;
+    animation-name: fire;
+    animation-duration: 1s;
+    animation-iteration-count: 1;
+    animation-timing-function: ease-in-out;
+    opacity: 0;
+}
+
+.lightning-attack {
+    position: relative;
+    color: rgb(4, 112, 253);
+    top: 25px;
+    left: 100px;
+    animation-name: lightning;
+    animation-duration: 1s;
+    animation-iteration-count: 1;
+    animation-timing-function: ease-in-out;
+    opacity: 0;
+}
+
+@keyframes physical {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+        top: 40px;
+        left: 110px;
+    }
+}
+
+@keyframes fire {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+        top: 45px;
+        left: 120px;
+    }
+}
+
+@keyframes lightning {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+        top: 50px;
+        left: 130px;
+    }
+}

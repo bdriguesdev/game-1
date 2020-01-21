@@ -1,0 +1,22 @@
+.character-container {
+    width: 380px;
+    padding: 15px;
+    height: 320px;
+    background-color: #0C1529;
+    border-radius: 35px;
+    box-shadow: 1px 1px 10px 0px rgba(0, 0, 0, 0.199);
+}
+
+.character-animation {
+    width: 150px;
+    height: 220px;
+    background-color: #111A2E;
+    border-radius: 45px;
+    margin-right: 10px;
+}
+
+.character-display {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
