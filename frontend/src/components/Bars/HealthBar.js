@@ -1,15 +1,19 @@
-import React, { useContext } from 'react';
+import React from 'react';
 
 import './HealthBar.css'
-// import MainContext from '../../contexts/MainContext';
 
 const HealthBar = props => {
 
-    // const { charInfo } = useContext(MainContext);
+
+    const calcHealthWidth = () => {
+        return (props.health * 100) / props.maxHealth + "%";
+    }
 
     return (
         <div className="health-bar-container">
-            <div className="health-bar">{props.health}/{props.maxHealth}</div>
+            <div style={{ width: calcHealthWidth() }} className="health-bar">
+                <span className="health-bar-info">{props.health}/{props.maxHealth}</span> 
+            </div>
         </div>
     );
 }
