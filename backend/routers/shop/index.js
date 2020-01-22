@@ -2,7 +2,7 @@ const express = require('express');
 
 const Character = require('../../models/Character');
 
-const router = express.router();
+const router = express.Router();
 
 router.post('/', async (req, res, next) => {
     // i need to create the shop object with the items thats going to sell there
@@ -89,11 +89,13 @@ router.post('/', async (req, res, next) => {
                     return;
                 } else if (from.quantity > 1) {
                     if(item.quantity - from.quantity === 0) {
-                        characters.slots.inventory[from.position] = 0;
+                        character.slots.inventory[from.position] = 0;
                     } else {
                         item.quantity -= from.quantity;
-                        characters.slots.inventory[from.position] = item;
+                        character.slots.inventory[from.position] = item;
                     }
+                } else {
+                    character.slots.inventory[from.position] = 0;
                 }
                 character.goldCoins += (item.price * from.quantity) * (1 - tierPercentPrice[item.tier - 1]);
             } else {
@@ -126,9 +128,11 @@ router.post('/', async (req, res, next) => {
                 }
             }
         }
+        await character.markModified('slots');
         await character.save()
         res.json({
-            message: 'Working'
+            message: 'Working',
+            character
         });
         return;
     } catch (error) {

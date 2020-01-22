@@ -9,6 +9,7 @@ const characterRouter = require('./routers/character/index');
 const battleRouter = require('./routers/battle/index');
 const isAuth = require('./routers/authorization/index');
 const inventoryRouter = require('./routers/inventory/index');
+const shopRouter = require('./routers/shop/index');
 
 const app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -32,6 +33,7 @@ app.use('/inventory', inventoryRouter);
 app.use('/hunt', huntRouter);
 app.use('/character', characterRouter);
 app.use('/battle', battleRouter);
+app.use('/shop', shopRouter);
 
 // `mongodb+srv://brunoadmin:5vnRApbWZzfio6Hh@cluster0-utmwr.mongodb.net/test?retryWrites=true&w=majority`
 mongoose.connect('mongodb+srv://brunoadmin:5vnRApbWZzfio6Hh@cluster0-utmwr.mongodb.net/test?retryWrites=true&w=majority', { useNewUrlParser: true } )

@@ -157,6 +157,7 @@ const loot = (monsterLoot, lootSlots, monsterGoldDrop) => {
                 id: itemInfo.id,
                 name: itemInfo.name,
                 type: itemInfo.type,
+                price: itemInfo.price,
                 maxStack: itemInfo.maxStack,
                 quantity: itemInfo.quantity,
                 tier: Math.floor(Math.random() * 3 + 1),

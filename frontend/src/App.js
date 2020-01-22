@@ -13,6 +13,7 @@ import CharCreation from './pages/CharCreation/CharCreation';
 import MainContext from './contexts/MainContext.js';
 import Talents from './pages/Talents/Talents';
 import Depot from './pages/Depot/Depot';
+import Shop from './pages/Shop/Shop';
 
 function App() {
   const [token, setToken] = useState(null);
@@ -54,6 +55,7 @@ function App() {
               <Route path="/about" component={About} key='5'/>,
               <Route path="/talents" component={Talents} key='6'/>,
               <Route path="/depot" component={Depot} key='7'/>,
+              <Route path="/shop" component={Shop} key='8'/>,
               <Redirect from='*' to='/home' key='8'/>
             ])}
             {/* <Redirect exact from="/" to='/login' />

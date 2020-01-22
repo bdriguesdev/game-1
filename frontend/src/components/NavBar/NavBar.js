@@ -26,9 +26,10 @@ const NavBar = props => {
                         <li key='0'><NavLink to='/home'>Home</NavLink></li>,
                         <li key='1'><NavLink to='/huntingplaces'>Hunting Places</NavLink></li>,
                         <li key='2'><NavLink to='/battlefield'>Battle Field</NavLink></li>,
-                        <li key='3'><NavLink to='/depot'>Depot</NavLink></li>,
-                        <li key='4'><NavLink to='/talents'>Talents</NavLink></li>,
-                        <li key='5'><NavLink to='/about'>About</NavLink></li>
+                        <li key='3'><NavLink to='/shop'>Shop</NavLink></li>,
+                        <li key='4'><NavLink to='/depot'>Depot</NavLink></li>,
+                        <li key='5'><NavLink to='/talents'>Talents</NavLink></li>,
+                        <li key='6'><NavLink to='/about'>About</NavLink></li>
                     ])}
                     {/* <li><NavLink to='/login'>Login</NavLink></li>
                     <li><NavLink to='/register'>Register</NavLink></li>
