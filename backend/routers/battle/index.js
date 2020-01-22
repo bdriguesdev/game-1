@@ -102,12 +102,13 @@ router.post('/attack', async (req, res) => {
             }); 
             return;
         }
-        const { newCharacter, characterAttack, monsterAttack } = await battle(character, spell);
+        const { newCharacter, itemsDroppedQuant, characterAttack, monsterAttack } = await battle(character, spell);
         //character = newCharacter;
         await character.markModified('battle');
         await character.save();
         res.json({
             message: 'Working',
+            itemsDroppedQuant,
             charExp: character.experience,
             charGold: character.goldCoins,
             charEnergy: character.energy,

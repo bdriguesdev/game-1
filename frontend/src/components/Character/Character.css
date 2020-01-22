@@ -28,7 +28,7 @@
     opacity: 1;
     font-size: 25px;
     color: gold;
-    animation: golddrop 1000ms ease-in-out 1 normal forwards;
+    animation: golddrop 2000ms ease-in-out 1 normal forwards;
 }
 
 @keyframes golddrop {

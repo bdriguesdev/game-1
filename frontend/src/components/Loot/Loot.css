@@ -38,6 +38,22 @@
     box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.384);
 }
 
+.loot-slot-new {
+    animation: newloot 2000ms ease-in-out 1 normal forwards;
+}
+
+@keyframes newloot {
+    0% {
+        box-shadow: none;
+    }
+    50% {
+        box-shadow: 0 0 15px rgb(0, 166, 217);
+    }
+    100% {
+        box-shadow: none;
+    }
+}
+
 .loot-slot p {
     width: 100%;
     height: 100%;

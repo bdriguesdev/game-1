@@ -14,6 +14,16 @@ const HotkeysBar = props => {
         });
     };
 
+    const lootDropAnimation = (value) => {
+        const lootSlots = document.querySelectorAll('.loot-slot');
+        for(let x = 0; x < value; x++) {
+            lootSlots[x].classList.add('loot-slot-new');
+            setTimeout(() => {
+                lootSlots[x].classList.remove('loot-slot-new');
+            }, 2000);
+        }
+    };
+
     const goldCoinsDropAnimation= (drop) => {
         const container = document.querySelector('.battlefield .character-container');
         const gold = document.createElement('div');
@@ -22,7 +32,7 @@ const HotkeysBar = props => {
         container.appendChild(gold);
         setTimeout(() => {
             container.removeChild(gold);
-        }, 1000);
+        }, 2000);
     };
 
     const displayAttackAnimation = (model, stats) => {
@@ -82,6 +92,10 @@ const HotkeysBar = props => {
             } 
             if(data.monsterAttack.totalDamage > 0) {
                 displayAttackAnimation('character', data.monsterAttack);
+            }
+            if(data.itemsDroppedQuant && data.itemsDroppedQuant > 0) {
+                console.log('DROP');
+                lootDropAnimation(data.itemsDroppedQuant);
             }
         }).catch(err => {
             console.log(err);

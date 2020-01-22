@@ -197,6 +197,7 @@ const loot = (monsterLoot, lootSlots, monsterGoldDrop) => {
     //here i need to specifie the quantity of slots that i need on the loot stuff
     lootSlots.splice(12);
     return {
+        itemsDroppedQuantValue: itemsDropped.length,
         newLootSlots: lootSlots,
         goldCoinsDropped: goldCoins
     };
@@ -221,7 +222,7 @@ const battle = async (character, spell) => {
     if(monsterAttack.isBleeding) {
         character.isBleeding = true;
     }
-
+    let itemsDroppedQuant = null;
     const newMonsterHealth = monsterHealth - characterAttack.totalDamage;
     character.battle[0].health = newMonsterHealth >= 0 ? newMonsterHealth: 0;
     if(newMonsterHealth <= 0) {
@@ -230,7 +231,8 @@ const battle = async (character, spell) => {
         const characterPlusExp = experience(character, character.battle[0].experience);
         character = characterPlusExp;
         //loot
-        const { newLootSlots, goldCoinsDropped } = loot(monster.loot, character.slots.loot, monster.gold);
+        const { itemsDroppedQuantValue, newLootSlots, goldCoinsDropped } = loot(monster.loot, character.slots.loot, monster.gold);
+        itemsDroppedQuant = itemsDroppedQuantValue;
         character.slots.loot = newLootSlots;
         character.goldCoins += goldCoinsDropped;
         //create a new monster
@@ -250,6 +252,7 @@ const battle = async (character, spell) => {
     }
     //send the information back to the player?
     return {
+        itemsDroppedQuant,
         newCharacter: character,
         monsterAttack,
         characterAttack

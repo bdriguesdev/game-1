@@ -32,7 +32,6 @@ router.post('/create', async (req, res) => {
         await character.save();
         user.characters.push(character._id);
         await user.save();
-        console.log(character);
         res.json({
             message: 'Character created!',
             character
