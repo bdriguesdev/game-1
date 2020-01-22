@@ -1,4 +1,5 @@
 .character-container {
+    position: relative;
     width: 380px;
     padding: 15px;
     height: 320px;
@@ -19,4 +20,23 @@
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.character-gold-drop {
+    position: absolute;
+    opacity: 1;
+    font-size: 25px;
+    color: gold;
+    animation: golddrop 1000ms ease-in-out 1 normal forwards;
+}
+
+@keyframes golddrop {
+    0% {
+        opacity: 1;
+        top: 0;
+    }
+    100% {
+        opacity: 0;
+        top: -100px;
+    }
 }

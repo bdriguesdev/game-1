@@ -13,6 +13,18 @@ const HotkeysBar = props => {
             return !prev;
         });
     };
+
+    const goldCoinsDropAnimation= (drop) => {
+        const container = document.querySelector('.battlefield .character-container');
+        const gold = document.createElement('div');
+        gold.textContent = "+" + drop;
+        gold.classList.add('character-gold-drop');
+        container.appendChild(gold);
+        setTimeout(() => {
+            container.removeChild(gold);
+        }, 1000);
+    };
+
     const handleAttack = (evt, spell) => {
         console.log(spell);
         if(spell === 0) {
@@ -32,6 +44,9 @@ const HotkeysBar = props => {
         }).then(res => {
             return res.json();
         }).then(data => {
+            if (data.character.goldCoins - charInfo.goldCoins > 0) {
+                goldCoinsDropAnimation(data.character.goldCoins - charInfo.goldCoins);
+            }
             setCharInfo(data.character);
             setCharacterAttack(data.characterAttack);
             setTimeout(() => {

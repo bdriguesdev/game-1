@@ -2,7 +2,6 @@ import React, { useContext } from 'react';
 
 import './Enemy.css';
 import HealthBar from '../../components/Bars/HealthBar';
-import EnergyBar from '../../components/Bars/EnergyBar';
 import MainContext from '../../contexts/MainContext.js';
 
 const Enemy = props => {
