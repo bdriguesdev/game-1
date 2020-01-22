@@ -2,6 +2,7 @@ import React, { useContext, useState } from 'react';
 
 import './SetInventory.css';
 import images from '../../utils/images'
+import statsNames from '../../utils/statsNames'
 import MainContext from '../../contexts/MainContext';
 
 const SetInventory = props => {
@@ -92,9 +93,20 @@ const SetInventory = props => {
             <div className={`set-inventory-details`} hidden={isDetailsActive? false: true} id='set-details'>
                 {
                     itemInfo && ([
-                        <p key='item-name'>{itemInfo.name}</p>,
-                        <p key='item-type'>{itemInfo.type}</p>,
-                        <p key='item-tier'>{itemInfo.tier}</p>
+                        <p className="strong" key='item-name'>T{itemInfo.tier} {itemInfo.name}</p>,
+                        <div className="detail-line" key="line-one"></div>,
+                        <p className="medium" key='item-type'>{statsNames[itemInfo.type]}</p>,
+                        itemInfo.base.map((stat, index) => {
+                            return (
+                                <p className="medium" key={"base"+index}>{statsNames[stat.stat]} +{stat.value}</p>
+                            )
+                        }),
+                        <div className="detail-line" key="line-two"></div>,
+                        itemInfo.stats.map((stat, index) => {
+                            return (
+                                <p className="light" key={"stat"+index}>{statsNames[stat.stat]} +{stat.value}</p>
+                            )
+                        }),
                     ])
                 }
             </div>
