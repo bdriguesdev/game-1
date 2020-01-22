@@ -6,7 +6,7 @@ import MainContext from '../../contexts/MainContext.js';
 
 const Enemy = props => {
 
-    const { charInfo, characterAttack } = useContext(MainContext);
+    const { charInfo} = useContext(MainContext);
 
     return (
         <div className="enemy-container">
@@ -22,15 +22,7 @@ const Enemy = props => {
                     <p>Armor: {charInfo.battle[0].stats.armor}</p>
                     <p>Elemental resistance: {charInfo.battle[0].stats.elementalResistance}</p>
                 </div>
-                <div className="enemy-animation">
-                    {
-                        characterAttack && ([
-                            characterAttack.physicalDamage > 0 && (<span key='physicalAttack' className='physical-attack'>{characterAttack.physicalDamage}</span>),
-                            characterAttack.fireDamage > 0 && (<span key='fireAttack' className='fire-attack'>{characterAttack.fireDamage}</span>),
-                            characterAttack.lightningDamage > 0 && (<span key='lightningAttack' className='lightning-attack'>{characterAttack.lightningDamage}</span>)
-                        ])
-                    }
-                </div>
+                <div className="enemy-animation"></div>
             </div>
         </div>
     )

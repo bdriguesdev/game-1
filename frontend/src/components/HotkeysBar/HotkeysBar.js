@@ -6,7 +6,7 @@ import MainContext from '../../contexts/MainContext.js';
 const HotkeysBar = props => {
     const [isHotkeysExpanded, setIsHotkeysExpanded] = useState(true);
 
-    const { charId, charInfo, setCharInfo, setCharacterAttack } = useContext(MainContext);
+    const { charId, charInfo, setCharInfo } = useContext(MainContext);
 
     const handleClick = evt => {
         setIsHotkeysExpanded(prev => {
@@ -23,6 +23,35 @@ const HotkeysBar = props => {
         setTimeout(() => {
             container.removeChild(gold);
         }, 1000);
+    };
+
+    const displayAttackAnimation = (model, stats) => {
+        const content = document.querySelector(`.${model}-animation`);
+        const attacks = [];
+        if(stats.physicalDamage > 0) {
+            const physical = document.createElement('div');
+            physical.textContent = "-" + stats.physicalDamage;
+            physical.classList.add(`${model}-physical-attack`);
+            attacks.push(physical);
+        }
+        if(stats.fireDamage > 0) {
+            const fire = document.createElement('div');
+            fire.textContent = "-" + stats.fireDamage;
+            fire.classList.add(`${model}-fire-attack`);
+            attacks.push(fire);
+        }
+        if(stats.lightningDamage > 0) {
+            const lightning = document.createElement('div');
+            lightning.textContent = "-" + stats.lightningDamage;
+            lightning.classList.add(`${model}-lightning-attack`);
+            attacks.push(lightning);
+        }
+        attacks.forEach(attack => {
+            content.appendChild(attack);
+            setTimeout(() => {
+                content.removeChild(attack);
+            }, 1000);
+        });
     };
 
     const handleAttack = (evt, spell) => {
@@ -48,10 +77,12 @@ const HotkeysBar = props => {
                 goldCoinsDropAnimation(data.character.goldCoins - charInfo.goldCoins);
             }
             setCharInfo(data.character);
-            setCharacterAttack(data.characterAttack);
-            setTimeout(() => {
-                setCharacterAttack(null);
-            }, 500);
+            if(data.characterAttack.totalDamage > 0) {
+                displayAttackAnimation('enemy', data.characterAttack);
+            } 
+            if(data.monsterAttack.totalDamage > 0) {
+                displayAttackAnimation('character', data.monsterAttack);
+            }
         }).catch(err => {
             console.log(err);
         })

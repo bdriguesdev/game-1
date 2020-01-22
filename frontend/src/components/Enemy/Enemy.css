@@ -24,9 +24,44 @@
 }
 
 .enemy-animation {
+    position: relative;
     margin-left: 5px;
     width: 150px;
     height: 220px;
     background-color: #111A2E;
     border-radius: 45px;
+}
+
+.enemy-physical-attack {
+    position: absolute;
+    color: lightgray;
+    font-size: 16px;
+    animation: eattack 1000ms ease-in-out 1 normal forwards;
+}
+
+.enemy-fire-attack {
+    position: absolute;
+    color: rgb(252, 192, 62);
+    font-size: 16px;
+    animation: eattack 1000ms ease-in-out 1 normal forwards;
+}
+
+.enemy-lightning-attack {
+    position: absolute;
+    color: rgb(28, 247, 255);
+    font-size: 16px;
+    animation: eattack 1000ms ease-in-out 1 normal forwards;
+}
+
+@keyframes eattack {
+    0% {
+        left: 0;
+        top: 0;
+        opacity: 1;
+    }
+    100% {
+        left: -30px;
+        top: 100px;
+        opacity: 0;
+    }
 }

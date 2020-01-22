@@ -9,6 +9,7 @@
 }
 
 .character-animation {
+    position: relative;
     width: 150px;
     height: 220px;
     background-color: #111A2E;
@@ -38,5 +39,39 @@
     100% {
         opacity: 0;
         top: -100px;
+    }
+}
+
+.character-physical-attack {
+    position: absolute;
+    color: lightgray;
+    font-size: 16px;
+    animation: cattack 1000ms ease-in-out 1 normal forwards;
+}
+
+.character-fire-attack {
+    position: absolute;
+    color: rgb(252, 192, 62);
+    font-size: 16px;
+    animation: cattack 1000ms ease-in-out 1 normal forwards;
+}
+
+.character-lightning-attack {
+    position: absolute;
+    color: rgb(28, 247, 255);
+    font-size: 16px;
+    animation: cattack 1000ms ease-in-out 1 normal forwards;
+}
+
+@keyframes cattack {
+    0% {
+        right: 0;
+        top: 0;
+        opacity: 1;
+    }
+    100% {
+        right: -20px;
+        top: 100px;
+        opacity: 0;
     }
 }
