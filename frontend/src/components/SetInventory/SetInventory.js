@@ -121,7 +121,7 @@ const SetInventory = props => {
                                 onMouseEnter={evt => handleMouseEnter(evt, charInfo.set[key])}
                                 onMouseLeave={handleMouseLeave}
                             >
-                                {charInfo.set[key] === 0 ? 0 : <p style={{ backgroundImage: `url('${images[charInfo.set[key].id]}')` }} onMouseEnter={evt => handleMouseEnter(evt, charInfo.set[key])} draggable={true} onDragStart={evt => handleDragStart(evt, { location: 'set', position: key, quantity: 1 })}></p>}
+                                {charInfo.set[key] === 0 ? <p style={{ backgroundImage: `url('${images[key]}')` }}></p> : <p style={{ backgroundImage: `url('${images[charInfo.set[key].id]}')` }} onMouseEnter={evt => handleMouseEnter(evt, charInfo.set[key])} draggable={true} onDragStart={evt => handleDragStart(evt, { location: 'set', position: key, quantity: 1 })}></p>}
                             </li>
                         );
                     })

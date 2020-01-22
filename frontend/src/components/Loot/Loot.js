@@ -76,7 +76,7 @@ const Loot = props => {
                                                 onMouseEnter={evt => handleMouseEnter(evt, slot)}
                                                 onMouseLeave={handleMouseLeave}
                                             >
-                                                    {slot === 0? 0 : (<p style={{ backgroundImage: `url('${images[slot.id]}')` }} onMouseEnter={evt => handleMouseEnter(evt, slot)} onDragStart={evt => handleDragStart(evt, { location: 'loot', position: index, quantity: slot.quantity })} draggable='true'></p>)}
+                                                    {slot === 0? "" : (<p style={{ backgroundImage: `url('${images[slot.id]}')` }} onMouseEnter={evt => handleMouseEnter(evt, slot)} onDragStart={evt => handleDragStart(evt, { location: 'loot', position: index, quantity: slot.quantity })} draggable='true'></p>)}
                                             </li>
                                         );
                                     })

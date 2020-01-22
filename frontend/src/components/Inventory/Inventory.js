@@ -151,7 +151,7 @@ const Inventory = props => {
                                 onMouseEnter={evt => handleMouseOver(evt, slot)}
                                 onMouseLeave={handleMouseOut}
                             >
-                                {slot === 0? 0: (<p style={{ backgroundImage: `url('${images[slot.id]}')` }} onMouseEnter={evt => handleMouseOver(evt, slot)} onDragStart={evt => handleDragStart(evt, { location: 'inventory', position: index, quantity: slot.quantity })} draggable='true'></p>)}
+                                {slot === 0? "": (<p style={{ backgroundImage: `url('${images[slot.id]}')` }} onMouseEnter={evt => handleMouseOver(evt, slot)} onDragStart={evt => handleDragStart(evt, { location: 'inventory', position: index, quantity: slot.quantity })} draggable='true'></p>)}
                             </li>
                         );
                     })

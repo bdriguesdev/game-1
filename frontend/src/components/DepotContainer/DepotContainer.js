@@ -114,7 +114,7 @@ const DepotContainer = props => {
                                 onMouseEnter={evt => handleMouseEnter(evt, slot)}
                                 onMouseLeave={handleMouseLeave}
                             >
-                                {slot === 0 ? 0 : <p style={{ backgroundImage: `url('${images[slot.id]}')` }} onMouseEnter={evt => handleMouseEnter(evt, slot)} draggable={true} onDragStart={evt => handleDragStart(evt, { location: 'depot', position: index, quantity: slot.quantity})}></p>}
+                                {slot === 0 ? "" : <p style={{ backgroundImage: `url('${images[slot.id]}')` }} onMouseEnter={evt => handleMouseEnter(evt, slot)} draggable={true} onDragStart={evt => handleDragStart(evt, { location: 'depot', position: index, quantity: slot.quantity})}></p>}
                             </li>
                         );
                     })
