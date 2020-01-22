@@ -1,14 +1,17 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 
 import './DepotContainer.css';
+import images from '../../utils/images';
 import MainContext from '../../contexts/MainContext'
 
 const DepotContainer = props => {
+    const [itemInfo, setItemInfo] = useState(null);
+    const [isDetailsActive, setIsDetailsActive] = useState(false);
 
     const { charInfo, setCharInfo, charId } = useContext(MainContext);
     
     const handleDragStart = (evt, data) => {
-        console.log('start');
+        handleMouseLeave();
         evt.dataTransfer.setData('location', data.location);
         evt.dataTransfer.setData('position', data.position);
         evt.dataTransfer.setData('quantity', data.quantity);
@@ -17,7 +20,6 @@ const DepotContainer = props => {
         evt.preventDefault();
     };
     const handleDrop = (evt, data) => {
-        console.log('drop');
         //from info
         const location = evt.dataTransfer.getData('location');
         const position = +evt.dataTransfer.getData('position');
@@ -55,14 +57,37 @@ const DepotContainer = props => {
                 return;
             }
             setCharInfo(data.character);
-            console.log(data.message);
         }).catch(err => {
             console.log(err);
         })
     }
 
+    const handleMouseEnter = (evt, slot) => {
+        const { target } = evt;
+        const details = document.getElementById('depot-details');
+        if(slot !== 0) {
+            details.style.top = `${target.offsetTop - 10}px`
+            details.style.left = `${target.offsetLeft + 45}px`
+            setItemInfo(slot);
+            setIsDetailsActive(true);
+        }
+    };
+
+    const handleMouseLeave = evt => {
+        setIsDetailsActive(false);
+    }
+
     return (
         <div className="depot-inventory">
+            <div className={`depot-details`} hidden={isDetailsActive? false: true} id='depot-details'>
+                {
+                    itemInfo && ([
+                        <p key='item-name'>{itemInfo.name}</p>,
+                        <p key='item-type'>{itemInfo.type}</p>,
+                        <p key='item-tier'>{itemInfo.tier}</p>
+                    ])
+                }
+            </div>
             <ul
                 className='inventory-slots'
             >
@@ -73,9 +98,11 @@ const DepotContainer = props => {
                                 key={index}
                                 className='inventory-slot'
                                 onDragOver={handleDragOver}
-                                onDrop={evt => handleDrop(evt, { location: 'inventory', position: index, quantity: slot.quantity })}
+                                onDrop={evt => handleDrop(evt, { location: 'depot', position: index, quantity: slot.quantity })}
+                                onMouseEnter={evt => handleMouseEnter(evt, slot)}
+                                onMouseLeave={handleMouseLeave}
                             >
-                                {slot === 0 ? 0 : <p draggable={true} onDragStart={evt => handleDragStart(evt, { location: 'depot', position: index, quantity: slot.quantity})}>1</p>}
+                                {slot === 0 ? 0 : <p style={{ backgroundImage: `url('${images[slot.id]}')` }} onMouseEnter={evt => handleMouseEnter(evt, slot)} draggable={true} onDragStart={evt => handleDragStart(evt, { location: 'depot', position: index, quantity: slot.quantity})}></p>}
                             </li>
                         );
                     })

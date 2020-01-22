@@ -27,3 +27,12 @@
     margin-left: 10px;
 }
 
+.depot-details {
+    color: black;
+    background-color: white;
+    position: absolute;
+    width: 150px;
+    top: 0;
+    left: 0;
+}
+
