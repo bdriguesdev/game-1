@@ -54,7 +54,6 @@ router.post('/set', async (req, res, next) => {
     //  I ALSO NEED TO CREATE THE SET INSIDE THE CHARACTER MODEL
     //
     const { charId, from, to } = req.body;
-    console.log(to);
     try {
         let character = await Character.findById(charId);
         if(!character) {
@@ -81,7 +80,6 @@ router.post('/set', async (req, res, next) => {
         }
         if(newItemSet.type !== to.position && to.position !== 'weapon1' && to.position !== 'weapon2') {
             if(newItemSet !== 0) {
-                console.log(to, newItemSet);
                 res.json({
                     error: `This slot only accept ${to.position} items.`
                 });
@@ -97,7 +95,7 @@ router.post('/set', async (req, res, next) => {
         //if has a item in the slot here im going to remove the stats that this item is providing the character
         if(oldItemSet !== 0) {
             oldItemSet.base.forEach(statInfo => {
-                if(stat === 'health') {
+                if(statInfo.stat === 'health') {
                     character.health -= statInfo.value;
                 }
                 else {
@@ -105,7 +103,7 @@ router.post('/set', async (req, res, next) => {
                 }
             });
             oldItemSet.stats.forEach(statInfo => {
-                if(stat === 'health') {
+                if(statInfo.stat === 'health') {
                     character.health -= statInfo.value;
                 }
                 else {
@@ -116,7 +114,7 @@ router.post('/set', async (req, res, next) => {
         //adding the new stats from the new item placed in the set
         if(newItemSet !== 0) {
             newItemSet.base.forEach(statInfo => {
-                if(stat === 'health') {
+                if(statInfo.stat === 'health') {
                     character.health += statInfo.value;
                 }
                 else {
@@ -124,7 +122,7 @@ router.post('/set', async (req, res, next) => {
                 }
             });
             newItemSet.stats.forEach(statInfo => {
-                if(stat === 'health') {
+                if(statInfo.stat === 'health') {
                     character.health += statInfo.value;
                 }
                 else {
@@ -161,8 +159,15 @@ router.post('/set', async (req, res, next) => {
             }
         }
         //changing locations
-        character.set[to.position] = newItemSet;
-        character.slots[from.location][from.position] = oldItemSet;
+        if(from.location === 'set') {
+            character.set[from.position] = newItemSet;
+            character.slots[to.location][to.position] = oldItemSet;
+        } else {
+            character.set[to.position] = newItemSet;
+            character.slots[from.location][from.position] = oldItemSet;
+        }
+        await character.markModified('slots');
+        await character.save();
 
         res.json({
             character

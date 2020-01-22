@@ -23,11 +23,11 @@ const Inventory = props => {
         console.log('drop');
         //from info
         const location = evt.dataTransfer.getData('location');
-        const position = +evt.dataTransfer.getData('position');
+        const position = isNaN(+evt.dataTransfer.getData('position'))? evt.dataTransfer.getData('position'): +evt.dataTransfer.getData('position');
         const quantity = evt.dataTransfer.getData('quantity');
         if(!location || !position || !quantity) {
             if(position !== 0) {
-                console.log('error!');
+                console.log('error!3');
                 return;
             }
         }
@@ -45,7 +45,7 @@ const Inventory = props => {
                     quantity: data.quantity? +data.quantity: 0
                 }
             }
-            fetch('http://localhost:8000/characet/set' , {
+            fetch('http://localhost:8000/character/set' , {
                 method: 'POST',
                 body: JSON.stringify(bodyRequest),
                 headers: {
@@ -59,7 +59,6 @@ const Inventory = props => {
                     return;
                 }
                 setCharInfo(data.character);
-                console.log(data);
             }).catch(err => {
                 console.log(err);
             })
@@ -91,7 +90,6 @@ const Inventory = props => {
                     return;
                 }
                 setCharInfo(data.character);
-                console.log(data.message);
             }).catch(err => {
                 console.log(err);
             })
