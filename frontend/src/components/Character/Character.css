@@ -12,9 +12,11 @@
     position: relative;
     width: 150px;
     height: 220px;
-    background-color: #111A2E;
     border-radius: 45px;
     margin-right: 10px;
+    display: flex;
+    align-items: center;;
+    justify-content: center;
 }
 
 .character-display {
@@ -66,12 +68,12 @@
 @keyframes cattack {
     0% {
         right: 0;
-        top: 0;
+        top: 50px;
         opacity: 1;
     }
     100% {
         right: -20px;
-        top: 100px;
+        top: 150px;
         opacity: 0;
     }
 }

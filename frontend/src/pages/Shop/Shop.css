@@ -24,6 +24,7 @@
     align-items: center;
     border-radius: 35px;
     margin-right: 5%;
+    box-shadow: 1px 1px 10px 0px rgba(0, 0, 0, 0.199);
 }
 
 .shop-vendor-container {
@@ -36,4 +37,5 @@
     align-items: center;
     border-radius: 35px;
     margin-left: 5%;
+    box-shadow: 1px 1px 10px 0px rgba(0, 0, 0, 0.199);
 }

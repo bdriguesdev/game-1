@@ -17,6 +17,7 @@
     width: 550px;
     padding: 20px;
     border-radius: 35px;
+    box-shadow: 1px 1px 10px 0px rgba(0, 0, 0, 0.199);
 }
 
 .depot-inventory-box {

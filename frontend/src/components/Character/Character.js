@@ -5,6 +5,7 @@ import HealthBar from '../../components/Bars/HealthBar';
 import EnergyBar from '../../components/Bars/EnergyBar';
 import MainContext from '../../contexts/MainContext';
 import Inventory from '../../components/Inventory/Inventory';
+import CharacterSVG from '../../assets/Character.svg';
 
 const Character = props => {
 
@@ -18,7 +19,9 @@ const Character = props => {
                 <EnergyBar />
             </div>
             <div className='character-display'>
-                <div className='character-animation'></div>
+                <div className='character-animation'>
+                    <img src={CharacterSVG} alt="Character animation"/>
+                </div>
                 <Inventory /> 
             </div>  
         </div>
