@@ -82,22 +82,30 @@ const DepotContainer = props => {
         <div className="depot-inventory">
             <div className={`depot-details`} hidden={isDetailsActive? false: true} id='depot-details'>
                 {
-                    itemInfo && ([
-                        <p className="strong" key='item-name'>T{itemInfo.tier} {itemInfo.name}</p>,
-                        <div className="detail-line" key="line-one"></div>,
-                        <p className="medium" key='item-type'>{statsNames[itemInfo.type]}</p>,
-                        itemInfo.base.map((stat, index) => {
-                            return (
-                                <p className="medium" key={"base"+index}>{statsNames[stat.stat]} +{stat.value}</p>
-                            )
-                        }),
-                        <div className="detail-line" key="line-two"></div>,
-                        itemInfo.stats.map((stat, index) => {
-                            return (
-                                <p className="light" key={"stat"+index}>{statsNames[stat.stat]} +{stat.value}</p>
-                            )
-                        }),
-                    ])
+                    itemInfo && (
+                        itemInfo.type === 'hotkey'?
+                        ([
+                            <p className="strong" key='item-name'>{itemInfo.name}</p>,
+                            <div className="detail-line" key="line-one"></div>,
+                            <p className="medium" key='item-type'>health {itemInfo.health[0] + '-' + itemInfo.health[1]}</p>
+                        ]):
+                        ([
+                            <p className="strong" key='item-name'>T{itemInfo.tier} {itemInfo.name}</p>,
+                            <div className="detail-line" key="line-one"></div>,
+                            <p className="medium" key='item-type'>{statsNames[itemInfo.type]}</p>,
+                            itemInfo.base.map((stat, index) => {
+                                return (
+                                    <p className="medium" key={"base"+index}>{statsNames[stat.stat]} +{stat.value}</p>
+                                )
+                            }),
+                            <div className="detail-line" key="line-two"></div>,
+                            itemInfo.stats.map((stat, index) => {
+                                return (
+                                    <p className="light" key={"stat"+index}>{statsNames[stat.stat]} +{stat.value}</p>
+                                )
+                            })
+                        ])
+                    )
                 }
             </div>
             <ul
