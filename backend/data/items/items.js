@@ -182,6 +182,15 @@ const items = [
         base: [
             { stat: 'armor', range: [3,5] }
         ]
+    },
+    {
+        id: 10,
+        name: 'Small Potion',
+        type: 'hotkey',
+        price: 2,
+        maxStack: 1,
+        quantity: 1,
+        health: [40,100]
     }
 ];
 

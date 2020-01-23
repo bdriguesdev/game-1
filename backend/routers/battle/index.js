@@ -123,6 +123,41 @@ router.post('/attack', async (req, res) => {
     }
 });
 
+router.post('/use', async (req, res) => {
+    try {
+        const { charId, itemHotkeyIndex} = req.body;
+        const character = await Character.findById(charId);
+        if(!character) {
+            res.json({
+                error: "This character doesn't exist."
+            });
+        }
+        const item = character.hotkeys.potions[itemHotkeyIndex];
+        if(item === 0) {
+            res.json({
+                error: "This slot is empty."
+            });
+        }
+        if(item.type !== 'hotkey') {
+            res.json({
+                error: "You can't use this item."
+            });
+        }
+        const minHealth = item.health[0];
+        const maxHealth = item.health[1];
+        const health = Math.floor(Math.random() * (maxHealth - minHealth + 1) + minHealth);
+        const newHealth = character.health + health;
+        character.health = newHealth > character.maxHealth? character.maxHealth: newHealth; 
+        character.save();
+
+        return res.json({
+            character
+        });
+    } catch (error) {
+        console.log(error);
+    }
+});
+
 router.post('/test', async (req, res) => {
     try {
         const { charId } = req.body;
