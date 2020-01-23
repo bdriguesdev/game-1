@@ -1,5 +1,5 @@
 .enemy-container {
-    width: 380px;
+    width: 400px;
     height: 320px;
     padding: 15px;
     background-color: #0C1529;
@@ -26,10 +26,12 @@
 .enemy-animation {
     position: relative;
     margin-left: 5px;
-    width: 150px;
+    width: 200px;
     height: 220px;
-    background-color: #111A2E;
     border-radius: 45px;
+    display: flex;
+    align-items: center;;
+    justify-content: center;
 }
 
 .enemy-physical-attack {
@@ -55,12 +57,12 @@
 
 @keyframes eattack {
     0% {
-        left: 0;
-        top: 0;
+        left: 50px;
+        top: 30px;
         opacity: 1;
     }
     100% {
-        left: -30px;
+        left: 0px;
         top: 100px;
         opacity: 0;
     }

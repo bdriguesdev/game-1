@@ -10,6 +10,7 @@ import amulet from '../assets/amulet.png';
 import rune from '../assets/rune.png';
 import id0 from '../assets/0.png';
 import basicAttack from '../assets/basicAttack.png';
+import Troll from '../assets/Troll.svg';
 
 export default {
     bodyArmour,
@@ -23,5 +24,6 @@ export default {
     amulet,
     rune,
     "0": id0,
-    basicAttack
+    basicAttack,
+    Troll
 }

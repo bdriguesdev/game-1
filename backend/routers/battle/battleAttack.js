@@ -111,6 +111,7 @@ const experience = (character, monsterExp) => {
     if(character.experience >= character.nextLevel) {
         character.level++;
         character.nextLevel = levels[character.level + 1];
+        character.talentPoints += 2;
         character.health += 10;
         character.stats.physicalDamage += 3;
         character.stats.armor += 5;
