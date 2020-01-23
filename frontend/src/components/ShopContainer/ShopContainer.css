@@ -1,10 +1,11 @@
 .shop-options {
     display: flex;
     justify-content: center;
+    margin-bottom: 10px;
 }
 .shop-options p {
     margin: 0 10px;
-    padding-bottom: 10px;
+    padding-bottom: 5px;
     font-weight: 400;
     cursor: pointer;
 }

@@ -13,6 +13,19 @@ const ShopContainer = () => {
     const { charId, charInfo, setCharInfo } = useContext(MainContext);
     const shop = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
 
+    const changeSellingMode = (value) => {
+        const sell = document.querySelector('.shop-sell');
+        const buy = document.querySelector('.shop-buy');
+
+        if(value === true) {
+            buy.style.borderBottom = 'none';
+            sell.style.borderBottom = '2px solid white';
+        } else {
+            buy.style.borderBottom = '2px solid white';
+            sell.style.borderBottom = 'none';
+        }
+        setSelling(value);
+    };
     const handleDragStart = (evt, data) => {
         handleMouseOut();
         evt.dataTransfer.setData('location', data.location);
@@ -106,8 +119,8 @@ const ShopContainer = () => {
                 }
             </div>
             <div className="shop-options">
-                <p className="shop-sell">Sell</p>
-                <p className="shop-buy">Buy</p>
+                <p onClick={() => changeSellingMode(true)} className="shop-sell">Sell</p>
+                <p onClick={() => changeSellingMode(false)} className="shop-buy">Buy</p>
             </div>
             <ul className='shop-slots'>
                 {
@@ -126,7 +139,7 @@ const ShopContainer = () => {
                             </li>
                         );
                     }):
-                    charInfo.slots.inventory.map((slot, index) => {
+                    shop.map((slot, index) => {
                         return (
                             <li 
                                 className='shop-slot'
@@ -134,7 +147,7 @@ const ShopContainer = () => {
                                 onDragOver={handleDragOver}
                                 onDrop={evt => handleDrop(evt, { location: 'shop', position: index, quantity: slot.quantity })}
                             >
-                                {""}
+                                {"0"}
                             </li>
                         );
                     })
