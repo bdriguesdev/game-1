@@ -2,6 +2,7 @@ import React, { useState, useContext } from 'react';
 
 import './HotkeysBar.css';
 import MainContext from '../../contexts/MainContext.js';
+import images from '../../utils/images';
 
 const HotkeysBar = props => {
     const [isHotkeysExpanded, setIsHotkeysExpanded] = useState(true);
@@ -131,7 +132,7 @@ const HotkeysBar = props => {
                                                     charInfo.hotkeys.spells.map((slot, index) => {
                                                         return (
                                                             <li key={index} className="hotkeys-spells-slot" onClick={evt => handleAttack(evt, slot.hotkey)}>
-                                                                {slot === 0? 0: (<p>1</p>)}
+                                                                {slot === 0? "": (<p style={{backgroundImage: `url('${images[slot.hotkey]}')`}} className="hotkey-spell-icon"></p>)}
                                                             </li>
                                                         );
                                                     })

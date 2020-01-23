@@ -9,6 +9,7 @@ import ring from '../assets/ring.png';
 import amulet from '../assets/amulet.png';
 import rune from '../assets/rune.png';
 import id0 from '../assets/0.png';
+import basicAttack from '../assets/basicAttack.png';
 
 export default {
     bodyArmour,
@@ -21,5 +22,6 @@ export default {
     ring,
     amulet,
     rune,
-    "0": id0
+    "0": id0,
+    basicAttack
 }
