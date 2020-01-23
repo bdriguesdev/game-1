@@ -103,9 +103,9 @@ const monsterTurn = (characterHealth, monster) => {
 const experience = (character, monsterExp) => {
     //i need to create a new .js file that has this object
     const levels = {
-        lv1: 0,
-        lv2: 150,
-        lv3: 270,
+        '1': 0,
+        '2': 150,
+        '3': 270,
     };
     character.experience += monsterExp;
     if(character.experience >= character.nextLevel) {
