@@ -16,11 +16,13 @@ const HotkeysBar = props => {
 
     const lootDropAnimation = (value) => {
         const lootSlots = document.querySelectorAll('.loot-slot');
-        for(let x = 0; x < value; x++) {
-            lootSlots[x].classList.add('loot-slot-new');
-            setTimeout(() => {
-                lootSlots[x].classList.remove('loot-slot-new');
-            }, 2000);
+        if(lootSlots) {
+            for(let x = 0; x < value; x++) {
+                lootSlots[x].classList.add('loot-slot-new');
+                setTimeout(() => {
+                    lootSlots[x].classList.remove('loot-slot-new');
+                }, 2000);
+            }
         }
     };
 

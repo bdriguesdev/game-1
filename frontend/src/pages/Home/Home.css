@@ -62,6 +62,9 @@ td:nth-child(2n) {
 }
 
 .character-info-container .character-animation {
-    margin-right: 5px;
-    margin-left: 4px;
+    margin-right: 10px;
+    margin-left: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }

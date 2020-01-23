@@ -6,6 +6,7 @@ import MainContext from '../../contexts/MainContext.js';
 import CharacterList from '../../components/CharacterList/CharacterList';
 import Inventory from '../../components/Inventory/Inventory';
 import SetInventory from '../../components/SetInventory/SetInventory';
+import CharacterSVG from '../../assets/Character.svg';
 
 const Home = props => {
     // const [number, setNumber] = useState(1);
@@ -166,7 +167,9 @@ const Home = props => {
                         </div>
                         <div className='character-info-display'>
                             <Inventory />
-                            <div className='character-animation'></div>
+                            <div className='character-animation'>
+                                <img src={CharacterSVG} alt="Character"/>
+                            </div>
                             <SetInventory />
                         </div>
                     </div>
