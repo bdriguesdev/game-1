@@ -10,7 +10,7 @@ const ShopContainer = () => {
     const [isDetailsActive, setIsDetailsActive] = useState(false);
     const [selling, setSelling] = useState(false);
 
-    const { charId, charInfo, setCharInfo } = useContext(MainContext);
+    const { charId, setCharInfo } = useContext(MainContext);
     const shop = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
 
     const changeSellingMode = (value) => {
@@ -18,11 +18,11 @@ const ShopContainer = () => {
         const buy = document.querySelector('.shop-buy');
 
         if(value === true) {
-            buy.style.borderBottom = 'none';
+            buy.style.borderColor = 'transparent';
             sell.style.borderBottom = '2px solid white';
         } else {
             buy.style.borderBottom = '2px solid white';
-            sell.style.borderBottom = 'none';
+            sell.style.borderColor = 'transparent';
         }
         setSelling(value);
     };
