@@ -148,14 +148,14 @@ const Inventory = props => {
         <div className="inventory-container">
             <div className={`inventory-details`} hidden={isDetailsActive? false: true} id='details'>
                 {
-                    itemInfo && ([
+                    itemInfo && (
                         itemInfo.type === 'hotkey'?
-                        (
+                        ([
                             <p className="strong" key='item-name'>{itemInfo.name}</p>,
                             <div className="detail-line" key="line-one"></div>,
                             <p className="medium" key='item-type'>health {itemInfo.health[0] + '-' + itemInfo.health[1]}</p>
-                        ):
-                        (
+                        ]):
+                        ([
                             <p className="strong" key='item-name'>T{itemInfo.tier} {itemInfo.name}</p>,
                             <div className="detail-line" key="line-one"></div>,
                             <p className="medium" key='item-type'>{statsNames[itemInfo.type]}</p>,
@@ -170,8 +170,8 @@ const Inventory = props => {
                                     <p className="light" key={"stat"+index}>{statsNames[stat.stat]} +{stat.value}</p>
                                 )
                             })
-                        )
-                    ])
+                        ])
+                    )
                 }
             </div>
             <ul className='inventory-slots'>
