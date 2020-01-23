@@ -42,6 +42,13 @@
     box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.384);
 }
 
+.hotkeys-pots-slots p {
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+}
+
 .hotkeys-spells-slot {
     background: #111A2E;
     width: 42px;

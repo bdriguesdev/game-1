@@ -8,7 +8,9 @@ import weapon2 from '../assets/weapon2.png';
 import ring from '../assets/ring.png';
 import amulet from '../assets/amulet.png';
 import rune from '../assets/rune.png';
+import potions from '../assets/potions.png';
 import id0 from '../assets/0.png';
+import id10 from '../assets/10.png';
 import basicAttack from '../assets/basicAttack.png';
 import Troll from '../assets/Troll.svg';
 
@@ -23,7 +25,9 @@ export default {
     ring,
     amulet,
     rune,
+    potions,
     "0": id0,
+    "10": id10,
     basicAttack,
     Troll
 }

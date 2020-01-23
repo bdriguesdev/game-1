@@ -190,7 +190,9 @@ const items = [
         price: 2,
         maxStack: 1,
         quantity: 1,
-        health: [40,100]
+        health: [40,100],
+        stats: [],
+        base: []
     }
 ];
 

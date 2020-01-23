@@ -63,6 +63,38 @@ const Inventory = props => {
             }).catch(err => {
                 console.log(err);
             })
+        } else if( location === 'shop') {
+            const bodyRequest = {
+                charId,
+                from: {
+                    location,
+                    position,
+                    quantity: quantity? +quantity: 0
+                },
+                to: {
+                    location: data.location,
+                    position: +data.position,
+                    quantity: data.quantity? +data.quantity: 0
+                }
+            }
+            fetch('http://localhost:8000/shop/' , {
+                method: 'POST',
+                body: JSON.stringify(bodyRequest),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }).then(res => {
+            return res.json();
+            }).then(data => {
+                if(data.error) {
+                    console.log(data.error);
+                    return;
+                }
+                setCharInfo(data.character);
+                console.log(data);
+            }).catch(err => {
+                console.log(err);
+            })
         } else {
             const bodyRequest = {
                 charId,
@@ -117,20 +149,28 @@ const Inventory = props => {
             <div className={`inventory-details`} hidden={isDetailsActive? false: true} id='details'>
                 {
                     itemInfo && ([
-                        <p className="strong" key='item-name'>T{itemInfo.tier} {itemInfo.name}</p>,
-                        <div className="detail-line" key="line-one"></div>,
-                        <p className="medium" key='item-type'>{statsNames[itemInfo.type]}</p>,
-                        itemInfo.base.map((stat, index) => {
-                            return (
-                                <p className="medium" key={"base"+index}>{statsNames[stat.stat]} +{stat.value}</p>
-                            )
-                        }),
-                        <div className="detail-line" key="line-two"></div>,
-                        itemInfo.stats.map((stat, index) => {
-                            return (
-                                <p className="light" key={"stat"+index}>{statsNames[stat.stat]} +{stat.value}</p>
-                            )
-                        }),
+                        itemInfo.type === 'hotkey'?
+                        (
+                            <p className="strong" key='item-name'>{itemInfo.name}</p>,
+                            <div className="detail-line" key="line-one"></div>,
+                            <p className="medium" key='item-type'>health {itemInfo.health[0] + '-' + itemInfo.health[1]}</p>
+                        ):
+                        (
+                            <p className="strong" key='item-name'>T{itemInfo.tier} {itemInfo.name}</p>,
+                            <div className="detail-line" key="line-one"></div>,
+                            <p className="medium" key='item-type'>{statsNames[itemInfo.type]}</p>,
+                            itemInfo.base.map((stat, index) => {
+                                return (
+                                    <p className="medium" key={"base"+index}>{statsNames[stat.stat]} +{stat.value}</p>
+                                )
+                            }),
+                            <div className="detail-line" key="line-two"></div>,
+                            itemInfo.stats.map((stat, index) => {
+                                return (
+                                    <p className="light" key={"stat"+index}>{statsNames[stat.stat]} +{stat.value}</p>
+                                )
+                            })
+                        )
                     ])
                 }
             </div>

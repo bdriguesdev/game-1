@@ -10,6 +10,11 @@
     cursor: pointer;
     border: 2px solid transparent;
 }
+
+.shop-options .shop-buy {
+    border-bottom: 2px solid white;
+}
+
 .shop-slots {
     list-style-type: none;
     padding: 0;
@@ -28,6 +33,13 @@
     margin-bottom: 5px;
     border-radius: 15px;
     box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.384);
+}
+
+.shop-slot p {
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
 }
 
 .shop-slot:nth-child(4n + 0) {

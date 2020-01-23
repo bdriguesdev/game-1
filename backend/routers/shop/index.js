@@ -1,15 +1,15 @@
 const express = require('express');
 
 const Character = require('../../models/Character');
+const items = require('../../data/items/items');
 
 const router = express.Router();
 
 router.post('/', async (req, res, next) => {
     // i need to create the shop object with the items thats going to sell there
     const { charId, from, to } = req.body;
-    const shop = [0,0,0,0,0,0,0,0,0,0,0,0];
+    const shop = [{ id: 10 },0,0,0,0,0,0,0,0,0,0,0];
     const tierPercentPrice = [0,0.3,0.8];
-    const itemShop = shop[from.position];
 
     try {
         if(from.location !== 'inventory' && from.location !== 'shop') {
@@ -45,6 +45,7 @@ router.post('/', async (req, res, next) => {
                 });
                 return;
             }
+            const itemShop = items[shop[from.position].id];
             let inventoryItem = character.slots.inventory[to.position];
             if(inventoryItem !== 0 && inventoryItem.name !== itemShop.name) {
                 res.json({
@@ -52,12 +53,13 @@ router.post('/', async (req, res, next) => {
                 });
                 return;
             }
-            if(from.quantity < 1 || from.quantity > itemShop.maxStack || inventoryItem.quantity === inventoryItem.maxStack) {
-                res.json({
-                    error: 'Quantity/maxstack error.'
-                });
-                return;
-            }
+            // if(from.quantity < 1 || from.quantity > itemShop.maxStack || inventoryItem.quantity === inventoryItem.maxStack) {
+            //     // console.log(itemShop.maxStack, inventoryItem.quantity, inventoryItem.maxStack);
+            //     res.json({
+            //         error: 'Quantity/maxstack error.'
+            //     });
+            //     return;
+            // }
             //here im checking if the player has free stacks to buy the amount of the item that he wants, if not buy the max we can
             const itemQuantity = inventoryItem.maxStack - inventoryItem.quantity < from.quantity ? inventoryItem.maxStack - inventoryItem.quantity: from.quantity; 
             const price = itemShop.price * itemQuantity;
@@ -69,7 +71,7 @@ router.post('/', async (req, res, next) => {
             }
             inventoryItem.quantity += itemQuantity;
             character.goldCoins -= price;
-            character.slots.inventory[to.position] = inventoryItem;
+            character.slots.inventory[to.position] = itemShop;
             //maybe i dont need the item shop here, i just need to see if the item sells here
             //above im only doing if the inv slot its empty i also need to do this if the inv slot has the same item thats stackable
             //stackable items

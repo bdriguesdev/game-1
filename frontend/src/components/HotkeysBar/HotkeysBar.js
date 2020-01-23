@@ -119,7 +119,7 @@ const HotkeysBar = props => {
                                                 charInfo.hotkeys.potions.map((slot, index) => {
                                                     return (
                                                         <li key={index} className='hotkeys-pots-slot'>
-                                                            {slot === 0? 0: (<p>1</p>)}
+                                                            {slot === 0? <p style={{ backgroundImage: `url('${images['potions']}')` }} ></p>: (<p style={{ backgroundImage: `url('${images[slot.id]}')` }}></p>)}
                                                         </li>
                                                     )
                                                 })
@@ -132,7 +132,7 @@ const HotkeysBar = props => {
                                                     charInfo.hotkeys.spells.map((slot, index) => {
                                                         return (
                                                             <li key={index} className="hotkeys-spells-slot" onClick={evt => handleAttack(evt, slot.hotkey)}>
-                                                                {slot === 0? "": (<p style={{backgroundImage: `url('${images[slot.hotkey]}')`}} className="hotkey-spell-icon"></p>)}
+                                                                {slot === 0? "": (<p style={{ backgroundImage: `url('${images[slot.hotkey]}')` }} className="hotkey-spell-icon"></p>)}
                                                             </li>
                                                         );
                                                     })

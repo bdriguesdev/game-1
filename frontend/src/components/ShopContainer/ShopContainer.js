@@ -3,6 +3,7 @@ import React, { useState, useContext } from 'react';
 import MainContext from '../../contexts/MainContext';
 import images from '../../utils/images';
 import statsNames from '../../utils/statsNames';
+import shop from '../../utils/shop';
 import './ShopContainer.css';
 
 const ShopContainer = () => {
@@ -11,7 +12,6 @@ const ShopContainer = () => {
     const [selling, setSelling] = useState(false);
 
     const { charId, setCharInfo } = useContext(MainContext);
-    const shop = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
 
     const changeSellingMode = (value) => {
         const sell = document.querySelector('.shop-sell');
@@ -101,20 +101,12 @@ const ShopContainer = () => {
             <div className={`shop-details`} hidden={isDetailsActive? false: true} id='shop-details'>
                 {
                     itemInfo && ([
-                        <p className="strong" key='item-name'>T{itemInfo.tier} {itemInfo.name}</p>,
+                        <p className="strong" key='item-name'>{itemInfo.name}</p>,
                         <div className="detail-line" key="line-one"></div>,
                         <p className="medium" key='item-type'>{statsNames[itemInfo.type]}</p>,
-                        itemInfo.base.map((stat, index) => {
-                            return (
-                                <p className="medium" key={"base"+index}>{statsNames[stat.stat]} +{stat.value}</p>
-                            )
-                        }),
+                        <p className="medium" key="item-health">health {itemInfo.health[0] +"-"+ itemInfo.health[1]}</p>,
                         <div className="detail-line" key="line-two"></div>,
-                        itemInfo.stats.map((stat, index) => {
-                            return (
-                                <p className="light" key={"stat"+index}>{statsNames[stat.stat]} +{stat.value}</p>
-                            )
-                        }),
+                        <p className="medium" key="item-price">{itemInfo.price} gold</p>
                     ])
                 }
             </div>
@@ -124,7 +116,7 @@ const ShopContainer = () => {
             </div>
             <ul className='shop-slots'>
                 {
-                    selling ?
+                    !selling ?
                     shop.map((item, index) => {
                         return (
                             <li 
@@ -147,7 +139,7 @@ const ShopContainer = () => {
                                 onDragOver={handleDragOver}
                                 onDrop={evt => handleDrop(evt, { location: 'shop', position: index, quantity: slot.quantity })}
                             >
-                                {"0"}
+                                {""}
                             </li>
                         );
                     })
