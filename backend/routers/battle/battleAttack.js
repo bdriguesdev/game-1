@@ -6,7 +6,7 @@ const damageCalculation = (stats, isBleeding, spell, againstStats, talents) => {
     let totalDamage;
     //crit
     let critMultiplier = 100;
-    let critChance = stats.critChance;
+    let critChance = stats.criticalChance;
     if(talents && talents.resistance > 0) {
         againstStats.armor = Math.floor(againstStats.armor * (1 + talents.resistance * 2));
         againstStats.elementalResistence += talents.resistance * 2;
@@ -18,7 +18,7 @@ const damageCalculation = (stats, isBleeding, spell, againstStats, talents) => {
         critChance += spell.criticalChance;
     }
     if(critChance > 0) {
-        const critChanceResult =  Math.floor(Math.random() * 101) <= critChance;
+        const critChanceResult = Math.floor(Math.random() * 101) <= critChance;
         if(critChanceResult) {
             critMultiplier += stats.criticalMultiplier + spell.criticalMultiplier;
             if(talents) {
@@ -79,10 +79,10 @@ const damageCalculation = (stats, isBleeding, spell, againstStats, talents) => {
         fireDamage *= 1 - againstStats.elementalResistence / 100;
         lightningDamage *= 1 - againstStats.elementalResistence / 100;
     }
-    physicalDamage = Math.floor(physicalDamage);
-    fireDamage = Math.floor(fireDamage);
-    lightningDamage = Math.floor(lightningDamage);
-    totalDamage = Math.floor((physicalDamage + fireDamage + lightningDamage) * (critMultiplier / 100));
+    physicalDamage = Math.floor(physicalDamage * (critMultiplier / 100));
+    fireDamage = Math.floor(fireDamage * (critMultiplier / 100));
+    lightningDamage = Math.floor(lightningDamage * (critMultiplier / 100));
+    totalDamage = Math.floor(physicalDamage + fireDamage + lightningDamage);
     return {
         totalDamage,
         physicalDamage,
