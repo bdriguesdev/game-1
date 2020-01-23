@@ -8,7 +8,7 @@ router.post('/', async (req, res, next) => {
     // i need to create the shop object with the items thats going to sell there
     const { charId, from, to } = req.body;
     const shop = [0,0,0,0,0,0,0,0,0,0,0,0];
-    const tierPercentPrice = [0,30,80];
+    const tierPercentPrice = [0,0.3,0.8];
     const itemShop = shop[from.position];
 
     try {
@@ -97,7 +97,7 @@ router.post('/', async (req, res, next) => {
                 } else {
                     character.slots.inventory[from.position] = 0;
                 }
-                character.goldCoins += (item.price * from.quantity) * (1 - tierPercentPrice[item.tier - 1]);
+                character.goldCoins += Math.ceil((item.price * from.quantity) * (1 + tierPercentPrice[item.tier - 1]));
             } else {
                 if(!from.quantity) {
                     res.json({

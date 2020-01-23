@@ -62,7 +62,6 @@ const ShopContainer = () => {
                     return;
                 }
                 setCharInfo(data.character);
-                console.log(data, bodyRequest);
             }).catch(err => {
                 console.log(err);
             })
