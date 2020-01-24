@@ -241,6 +241,12 @@ router.post('/hotkeys', async (req, res, next) => {
                 });
                 return;
             } 
+            if(charInventory[to.position] !== 0) {
+                res.json({
+                    error: "You can't move an potion to an non-empty slot."
+                });
+                return;
+            }
             charInventory[to.position] = potion;
             charHotkeys[from.location][from.position] = 0;
             character.slots.inventory = charInventory;

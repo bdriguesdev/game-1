@@ -91,7 +91,6 @@ const Inventory = props => {
                     return;
                 }
                 setCharInfo(data.character);
-                console.log(data);
             }).catch(err => {
                 console.log(err);
             })
@@ -123,7 +122,6 @@ const Inventory = props => {
                     return;
                 }
                 setCharInfo(data.character);
-                console.log(data.character);
             }).catch(err => {
                 console.log(err);
             })
