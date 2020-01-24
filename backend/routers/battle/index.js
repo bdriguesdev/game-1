@@ -161,6 +161,7 @@ router.post('/use', async (req, res) => {
         const newHealth = character.health + health;
         character.health = newHealth > character.maxHealth? character.maxHealth: newHealth; 
         character.markModified('slots');
+        character.markModified('hotkeys');
         character.save();
 
         return res.json({
