@@ -125,14 +125,25 @@ router.post('/attack', async (req, res) => {
 
 router.post('/use', async (req, res) => {
     try {
-        const { charId, itemHotkeyIndex} = req.body;
+        const { charId, from} = req.body;
         const character = await Character.findById(charId);
         if(!character) {
             res.json({
                 error: "This character doesn't exist."
             });
         }
-        const item = character.hotkeys.potions[itemHotkeyIndex];
+        let item;
+        if(from.location === "spells") {
+            item = character.hotkeys.potions[itemHotkeyIndex];
+            character.hotkeys.potions[itemHotkeyIndex] = 0;
+        } else if(from.location === "inventory") {
+            item = character.slots.inventory[from.position];
+            character.slots.inventory[from.position] = 0;
+        } else {
+            res.json({
+                error: "You can't use this item from here."
+            });
+        }
         if(item === 0) {
             res.json({
                 error: "This slot is empty."
@@ -143,11 +154,13 @@ router.post('/use', async (req, res) => {
                 error: "You can't use this item."
             });
         }
+
         const minHealth = item.health[0];
         const maxHealth = item.health[1];
         const health = Math.floor(Math.random() * (maxHealth - minHealth + 1) + minHealth);
         const newHealth = character.health + health;
         character.health = newHealth > character.maxHealth? character.maxHealth: newHealth; 
+        character.markModified('slots');
         character.save();
 
         return res.json({

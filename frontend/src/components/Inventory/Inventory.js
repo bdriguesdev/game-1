@@ -144,6 +144,30 @@ const Inventory = props => {
         setIsDetailsActive(false);
     }
 
+    const handleUseItem = (from) => {
+        const bodyRequest = {
+            charId,
+            from
+        };
+        fetch('http://localhost:8000/battle/use/' , {
+            method: 'POST',
+            body: JSON.stringify(bodyRequest),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }).then(res => {
+        return res.json();
+        }).then(data => {
+            if(data.error) {
+                console.log(data.error);
+                return;
+            }
+            setCharInfo(data.character);
+        }).catch(err => {
+            console.log(err);
+        })
+    };
+
     return (
         <div className="inventory-container">
             <div className={`inventory-details`} hidden={isDetailsActive? false: true} id='details'>
@@ -191,7 +215,7 @@ const Inventory = props => {
                                 onMouseEnter={evt => handleMouseOver(evt, slot)}
                                 onMouseLeave={handleMouseOut}
                             >
-                                {slot === 0? "": (<p style={{ backgroundImage: `url('${images[slot.id]}')` }} onMouseEnter={evt => handleMouseOver(evt, slot)} onDragStart={evt => handleDragStart(evt, { location: 'inventory', position: index, quantity: slot.quantity })} draggable='true'></p>)}
+                                {slot === 0? "": (<p style={{ backgroundImage: `url('${images[slot.id]}')` }} onDoubleClick={() => handleUseItem({ location: 'inventory', position: index, quantity: slot.quantity })} onMouseEnter={evt => handleMouseOver(evt, slot)} onDragStart={evt => handleDragStart(evt, { location: 'inventory', position: index, quantity: slot.quantity })} draggable='true'></p>)}
                             </li>
                         );
                     })
