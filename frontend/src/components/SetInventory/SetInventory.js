@@ -1,13 +1,13 @@
 import React, { useContext, useState } from 'react';
 
+import ItemDetails from '../ItemDetails/ItemDetails';
 import './SetInventory.css';
 import images from '../../utils/images'
-import statsNames from '../../utils/statsNames'
 import MainContext from '../../contexts/MainContext';
 
 const SetInventory = props => {
     const [itemInfo, setItemInfo] = useState(null);
-    const [isDetailsActive, setIsDetailsActive] = useState(false);
+    const [slotPosition, setSlotPosition] = useState(null);
 
     const { charInfo, setCharInfo, charId } = useContext(MainContext);
 
@@ -73,43 +73,24 @@ const SetInventory = props => {
 
     const handleMouseEnter = (evt, slot) => {
         const { target } = evt;
-        const details = document.getElementById('set-details');
         if(slot !== 0) {
-            details.style.top = `${target.offsetTop - 10}px`
-            details.style.left = `${target.offsetLeft + 45}px`
             setItemInfo(slot);
-            setIsDetailsActive(true);
+            setSlotPosition({
+                top: target.offsetTop,
+                left: target.offsetLeft
+            });
         }
     };
 
-    const handleMouseLeave = evt => {
-        setIsDetailsActive(false);
+    const handleMouseLeave = () => {
+        setItemInfo(null);
     }
 
     const itemsSetPosition = ['amulet', 'helmet', 'rune', 'weapon1', 'bodyArmour', 'weapon2', 'gloves', 'legs', 'ring', 'boots']
 
     return (
         <div className="set-container">
-            <div className={`set-inventory-details`} hidden={isDetailsActive? false: true} id='set-details'>
-                {
-                    itemInfo && ([
-                        <p className="strong" key='item-name'>T{itemInfo.tier} {itemInfo.name}</p>,
-                        <div className="detail-line" key="line-one"></div>,
-                        <p className="medium" key='item-type'>{statsNames[itemInfo.type]}</p>,
-                        itemInfo.base.map((stat, index) => {
-                            return (
-                                <p className="medium" key={"base"+index}>{statsNames[stat.stat]} +{stat.value}</p>
-                            )
-                        }),
-                        <div className="detail-line" key="line-two"></div>,
-                        itemInfo.stats.map((stat, index) => {
-                            return (
-                                <p className="light" key={"stat"+index}>{statsNames[stat.stat]} +{stat.value}</p>
-                            )
-                        }),
-                    ])
-                }
-            </div>
+            <ItemDetails itemInfo={itemInfo} slotPosition={slotPosition} />
             <ul>
                 {
                     itemsSetPosition.map((key, index) => {

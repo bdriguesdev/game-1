@@ -1,13 +1,13 @@
 import React, { useState, useContext } from 'react';
 
+import ItemDetails from '../ItemDetails/ItemDetails';
 import './Inventory.css';
 import images from '../../utils/images';
-import statsNames from '../../utils/statsNames';
 import MainContext from '../../contexts/MainContext';
 
 const Inventory = props => {
     const [itemInfo, setItemInfo] = useState(null);
-    const [isDetailsActive, setIsDetailsActive] = useState(false);
+    const [slotPosition, setSlotPosition] = useState(null);
 
     const { charId, charInfo, setCharInfo } = useContext(MainContext);
 
@@ -161,17 +161,17 @@ const Inventory = props => {
 
     const handleMouseOver = (evt, slot) => {
         const { target } = evt;
-        const details = document.getElementById('details');
         if(slot !== 0) {
-            details.style.top = `${target.offsetTop - 10}px`
-            details.style.left = `${target.offsetLeft + 45}px`
             setItemInfo(slot);
-            setIsDetailsActive(true);
+            setSlotPosition({
+                top: target.offsetTop,
+                left: target.offsetLeft
+            });
         }
     };
 
-    const handleMouseOut = evt => {
-        setIsDetailsActive(false);
+    const handleMouseOut = () => {
+        setItemInfo(null);
     }
 
     const handleUseItem = (from) => {
@@ -200,34 +200,7 @@ const Inventory = props => {
 
     return (
         <div className="inventory-container">
-            <div className={`inventory-details`} hidden={isDetailsActive? false: true} id='details'>
-                {
-                    itemInfo && (
-                        itemInfo.type === 'hotkey'?
-                        ([
-                            <p className="strong" key='item-name'>{itemInfo.name}</p>,
-                            <div className="detail-line" key="line-one"></div>,
-                            <p className="medium" key='item-type'>health {itemInfo.health[0] + '-' + itemInfo.health[1]}</p>
-                        ]):
-                        ([
-                            <p className="strong" key='item-name'>T{itemInfo.tier} {itemInfo.name}</p>,
-                            <div className="detail-line" key="line-one"></div>,
-                            <p className="medium" key='item-type'>{statsNames[itemInfo.type]}</p>,
-                            itemInfo.base.map((stat, index) => {
-                                return (
-                                    <p className="medium" key={"base"+index}>{statsNames[stat.stat]} +{stat.value}</p>
-                                )
-                            }),
-                            <div className="detail-line" key="line-two"></div>,
-                            itemInfo.stats.map((stat, index) => {
-                                return (
-                                    <p className="light" key={"stat"+index}>{statsNames[stat.stat]} +{stat.value}</p>
-                                )
-                            })
-                        ])
-                    )
-                }
-            </div>
+            <ItemDetails itemInfo={itemInfo} slotPosition={slotPosition} />
             <ul className='inventory-slots'>
                 {
                     charInfo.slots.inventory.map((slot, index) => {

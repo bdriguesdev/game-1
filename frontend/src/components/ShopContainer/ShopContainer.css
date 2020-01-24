@@ -49,36 +49,3 @@
 .shop-slot:nth-child(n + 13) {
     margin-bottom: 0px;
 }
-
-.shop-details {
-    color: white;
-    box-shadow: 0 0 25px rgba(0, 0, 0, 0.356);
-    border-radius: 15px;
-    background-color: #0C1529;
-    position: absolute;
-    z-index: 4;
-    min-width: 140px;
-    padding: 10px 15px;
-    top: 0;
-    left: 0;
-    white-space: nowrap;
-}
-
-.detail-line {
-    width: 85%;
-    height: 1px;
-    margin: 8px auto;
-    background-color: #1A2338;
-}
-
-.strong {
-    font-weight: 500;
-}
-
-.medium {
-    font-weight: 400;
-}
-
-.light {
-    font-weight: 300;
-}

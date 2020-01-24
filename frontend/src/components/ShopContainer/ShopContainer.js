@@ -1,15 +1,15 @@
 import React, { useState, useContext } from 'react';
 
+import ItemDetails from '../ItemDetails/ItemDetails';
 import MainContext from '../../contexts/MainContext';
 import images from '../../utils/images';
-import statsNames from '../../utils/statsNames';
 import shop from '../../utils/shop';
 import './ShopContainer.css';
 
 const ShopContainer = () => {
     const [itemInfo, setItemInfo] = useState(null);
-    const [isDetailsActive, setIsDetailsActive] = useState(false);
     const [selling, setSelling] = useState(false);
+    const [slotPosition, setSlotPosition] = useState(null);
 
     const { charId, setCharInfo } = useContext(MainContext);
 
@@ -83,33 +83,22 @@ const ShopContainer = () => {
 
     const handleMouseOver = (evt, slot) => {
         const { target } = evt;
-        const details = document.getElementById('shop-details');
         if(slot !== 0) {
-            details.style.top = `${target.offsetTop - 10}px`
-            details.style.left = `${target.offsetLeft + 45}px`
             setItemInfo(slot);
-            setIsDetailsActive(true);
+            setSlotPosition({
+                top: target.offsetTop,
+                left: target.offsetLeft
+            });
         }
     };
 
-    const handleMouseOut = evt => {
-        setIsDetailsActive(false);
+    const handleMouseOut = () => {
+        setItemInfo(null);
     }
 
     return (
         <div className="shop-slots-container">
-            <div className={`shop-details`} hidden={isDetailsActive? false: true} id='shop-details'>
-                {
-                    itemInfo && ([
-                        <p className="strong" key='item-name'>{itemInfo.name}</p>,
-                        <div className="detail-line" key="line-one"></div>,
-                        <p className="medium" key='item-type'>{statsNames[itemInfo.type]}</p>,
-                        <p className="medium" key="item-health">health {itemInfo.health[0] +"-"+ itemInfo.health[1]}</p>,
-                        <div className="detail-line" key="line-two"></div>,
-                        <p className="medium" key="item-price">{itemInfo.price} gold</p>
-                    ])
-                }
-            </div>
+            <ItemDetails itemInfo={itemInfo} slotPosition={slotPosition} type={"selling"} />
             <div className="shop-options">
                 <p onClick={() => changeSellingMode(true)} className="shop-sell">Sell</p>
                 <p onClick={() => changeSellingMode(false)} className="shop-buy">Buy</p>

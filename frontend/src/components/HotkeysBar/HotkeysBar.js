@@ -2,12 +2,13 @@ import React, { useState, useContext } from 'react';
 
 import './HotkeysBar.css';
 import MainContext from '../../contexts/MainContext.js';
+import ItemDetails from '../ItemDetails/ItemDetails';
 import images from '../../utils/images';
 
 const HotkeysBar = props => {
     const [isHotkeysExpanded, setIsHotkeysExpanded] = useState(true);
     const [itemInfo, setItemInfo] = useState(null);
-    const [isDetailsActive, setIsDetailsActive] = useState(false);
+    const [slotPosition, setSlotPosition] = useState(null);
 
     const { charId, charInfo, setCharInfo } = useContext(MainContext);
 
@@ -187,17 +188,17 @@ const HotkeysBar = props => {
 
     const handleMouseEnter = (evt, slot) => {
         const { target } = evt;
-        const details = document.getElementById('potions-details');
         if(slot !== 0) {
-            details.style.top = `${target.offsetTop - 90}px`
-            details.style.left = `${target.offsetLeft + 45}px`
             setItemInfo(slot);
-            setIsDetailsActive(true);
+            setSlotPosition({
+                top: target.offsetTop,
+                left: target.offsetLeft
+            });
         }
     };
 
-    const handleMouseLeave = evt => {
-        setIsDetailsActive(false);
+    const handleMouseLeave = () => {
+        setItemInfo(null);
     }
 
     return (
@@ -209,28 +210,7 @@ const HotkeysBar = props => {
                             <div className='hotkeys-btn' onClick={handleClick}>-</div>
                             <div className='hotkeys'>
                                 <div className="hotkeys-container-slots" hidden={!isHotkeysExpanded}>
-                                    <div className={`potions-details`} hidden={isDetailsActive? false: true} id='potions-details'>
-                                        {
-                                            itemInfo &&
-                                                (itemInfo.type?
-                                                    ([
-                                                        <p className="strong" key='item-name'>{itemInfo.name}</p>,
-                                                        <div className="detail-line" key="line-one"></div>,
-                                                        <p className="medium" key='item-type'>health {itemInfo.health[0] + '-' + itemInfo.health[1]}</p>
-                                                    ]):
-                                                    ([
-                                                        <p className="strong" key='item-name'>{itemInfo.name}</p>,
-                                                        <p className="strong" key='item-energy'>{itemInfo.energy} energy</p>,
-                                                        <div className="detail-line" key="line-one"></div>,
-                                                        itemInfo.physicalDamage > 0 && <p className="medium" key='item-physical-dmg'>Physical damage {itemInfo.physicalDamage}%</p>,
-                                                        itemInfo.elementalDamage > 0 && <p className="medium" key='item-ele-dmg'>Elemental damage {itemInfo.elementalDamage}%</p>,
-                                                        itemInfo.bleedChance > 0 && <p className="medium" key='item-bleed-chance'>Bleeed chance {itemInfo.bleedChance}%</p>,
-                                                        itemInfo.criticalChance > 0 && <p className="medium" key='item-crit-chance'>Critical chance {itemInfo.criticalChance}%</p>,
-                                                        itemInfo.criticalMultiplier > 0 && <p className="medium" key='item-crit-mult'>Critical multiplier {itemInfo.criticalMultiplier}%</p>
-                                                    ])
-                                                )
-                                        }
-                                    </div>
+                                    <ItemDetails itemInfo={itemInfo} slotPosition={slotPosition} />
                                     <div className="hotkeys-pots">
                                         <ul className='hotkeys-pots-slots'>
                                             {
