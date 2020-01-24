@@ -17,7 +17,7 @@ const HotkeysBar = props => {
 
     const lootDropAnimation = (value) => {
         const lootSlots = document.querySelectorAll('.loot-slot');
-        if(lootSlots) {
+        if(lootSlots.length > 0) {
             for(let x = 0; x < value; x++) {
                 lootSlots[x].classList.add('loot-slot-new');
                 setTimeout(() => {
