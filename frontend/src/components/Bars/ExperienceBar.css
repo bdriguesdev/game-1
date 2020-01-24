@@ -1,0 +1,24 @@
+.experience-bar-container {
+    background: rgb(17, 29, 56);
+    position: relative;
+    width: 85%;
+    height: 19px;
+    border-radius: 50px;
+    margin: 10px auto;
+}
+
+.experience-bar {
+    background: rgb(101, 184, 45);
+    width: 100%;
+    height: 19px;
+    border-radius: 50px;
+    transition: 200ms ease-in-out;
+}
+
+.experience-bar-info {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 13px;
+    color: white;
+}
