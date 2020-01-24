@@ -189,7 +189,7 @@ const HotkeysBar = props => {
         const { target } = evt;
         const details = document.getElementById('potions-details');
         if(slot !== 0) {
-            details.style.top = `${target.offsetTop - 10}px`
+            details.style.top = `${target.offsetTop - 90}px`
             details.style.left = `${target.offsetLeft + 45}px`
             setItemInfo(slot);
             setIsDetailsActive(true);
@@ -211,11 +211,24 @@ const HotkeysBar = props => {
                                 <div className="hotkeys-container-slots" hidden={!isHotkeysExpanded}>
                                     <div className={`potions-details`} hidden={isDetailsActive? false: true} id='potions-details'>
                                         {
-                                            itemInfo && ([
-                                                <p className="strong" key='item-name'>{itemInfo.name}</p>,
-                                                <div className="detail-line" key="line-one"></div>,
-                                                <p className="medium" key='item-type'>health {itemInfo.health[0] + '-' + itemInfo.health[1]}</p>
-                                            ])
+                                            itemInfo &&
+                                                (itemInfo.type?
+                                                    ([
+                                                        <p className="strong" key='item-name'>{itemInfo.name}</p>,
+                                                        <div className="detail-line" key="line-one"></div>,
+                                                        <p className="medium" key='item-type'>health {itemInfo.health[0] + '-' + itemInfo.health[1]}</p>
+                                                    ]):
+                                                    ([
+                                                        <p className="strong" key='item-name'>{itemInfo.name}</p>,
+                                                        <p className="strong" key='item-energy'>{itemInfo.energy} energy</p>,
+                                                        <div className="detail-line" key="line-one"></div>,
+                                                        itemInfo.physicalDamage > 0 && <p className="medium" key='item-physical-dmg'>Physical damage {itemInfo.physicalDamage}%</p>,
+                                                        itemInfo.elementalDamage > 0 && <p className="medium" key='item-ele-dmg'>Elemental damage {itemInfo.elementalDamage}%</p>,
+                                                        itemInfo.bleedChance > 0 && <p className="medium" key='item-bleed-chance'>Bleeed chance {itemInfo.bleedChance}%</p>,
+                                                        itemInfo.criticalChance > 0 && <p className="medium" key='item-crit-chance'>Critical chance {itemInfo.criticalChance}%</p>,
+                                                        itemInfo.criticalMultiplier > 0 && <p className="medium" key='item-crit-mult'>Critical multiplier {itemInfo.criticalMultiplier}%</p>
+                                                    ])
+                                                )
                                         }
                                     </div>
                                     <div className="hotkeys-pots">
@@ -247,8 +260,14 @@ const HotkeysBar = props => {
                                                 {
                                                     charInfo.hotkeys.spells.map((slot, index) => {
                                                         return (
-                                                            <li key={index} className="hotkeys-spells-slot" onClick={evt => handleAttack(evt, slot.hotkey)}>
-                                                                {slot === 0? "": (<p style={{ backgroundImage: `url('${images[slot.hotkey]}')` }} className="hotkey-spell-icon"></p>)}
+                                                            <li 
+                                                                key={index} 
+                                                                className="hotkeys-spells-slot" 
+                                                                onClick={evt => handleAttack(evt, slot.hotkey)}
+                                                                onMouseEnter={evt => handleMouseEnter(evt, slot)}
+                                                                onMouseLeave={handleMouseLeave}
+                                                            >
+                                                                {slot === 0? "": (<p style={{ backgroundImage: `url('${images[slot.hotkey]}')` }} onMouseEnter={evt => handleMouseEnter(evt, slot)} className="hotkey-spell-icon"></p>)}
                                                             </li>
                                                         );
                                                     })
