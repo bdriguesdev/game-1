@@ -106,7 +106,9 @@ const experience = (character, monsterExp) => {
         '1': 0,
         '2': 150,
         '3': 350,
-        '4': 500
+        '4': 500,
+        '5': 1000,
+        '6': 3000
     };
     character.experience += monsterExp;
     if(character.experience >= character.nextLevel) {

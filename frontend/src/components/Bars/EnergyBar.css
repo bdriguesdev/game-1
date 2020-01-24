@@ -1,7 +1,8 @@
 .energy-bar-container {
-    background: lightblue;
+    position: relative;
+    background: rgb(17, 29, 56);
     width: 85%;
-    height: 15px;
+    height: 19px;
     border-radius: 50px;
     margin: 10px auto;
 }
@@ -9,6 +10,15 @@
 .energy-bar {
     background-color: #E9B80E;
     width: 100%;
-    height: 15px;
+    height: 19px;
     border-radius: 50px;
+    transition: 200ms ease-in-out;
+}
+
+.energy-bar-info {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 13px;
+    color: white;
 }

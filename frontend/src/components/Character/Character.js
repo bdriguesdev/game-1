@@ -16,7 +16,7 @@ const Character = props => {
             <div className='character-info'>
                 <h3>{charInfo.name}</h3>
                 <HealthBar health={charInfo.health} maxHealth={charInfo.maxHealth} />
-                <EnergyBar />
+                <EnergyBar energy={charInfo.energy} maxEnergy={charInfo.maxEnergy}  />
             </div>
             <div className='character-display'>
                 <div className='character-animation'>
