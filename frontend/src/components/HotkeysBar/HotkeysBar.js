@@ -104,6 +104,61 @@ const HotkeysBar = props => {
             console.log(err);
         })
     };
+
+    const handleDragStart = (evt, data) => {
+        // handleMouseOut();
+        evt.dataTransfer.setData('location', data.location);
+        evt.dataTransfer.setData('position', data.position);
+        evt.dataTransfer.setData('quantity', data.quantity);
+    };
+    const handleDragOver = evt => {
+        evt.preventDefault();
+    };
+    const handleDrop = (evt, data) => {
+        //from info
+        const location = evt.dataTransfer.getData('location');
+        const position = isNaN(+evt.dataTransfer.getData('position'))? evt.dataTransfer.getData('position'): +evt.dataTransfer.getData('position');
+        const quantity = evt.dataTransfer.getData('quantity');
+        if(!location || !position || !quantity) {
+            if(position !== 0) {
+                console.log('error!3');
+                return;
+            }
+        }
+        if(location === 'inventory') {
+            const bodyRequest = {
+                charId,
+                from: {
+                    location,
+                    position,
+                    quantity: quantity? +quantity: 0
+                },
+                to: {
+                    location: data.location,
+                    position: +data.position,
+                    quantity: data.quantity? +data.quantity: 0
+                }
+            }
+            fetch('http://localhost:8000/character/hotkeys/' , {
+                method: 'POST',
+                body: JSON.stringify(bodyRequest),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }).then(res => {
+            return res.json();
+            }).then(data => {
+                if(data.error) {
+                    console.log(data.error);
+                    return;
+                }
+                setCharInfo(data.character);
+            }).catch(err => {
+                console.log(err);
+            })
+        }
+    }
+
     return (
         <div className={isHotkeysExpanded? 'hotkeys-container-active': 'hotkeys-container'}>
             {
@@ -118,8 +173,17 @@ const HotkeysBar = props => {
                                             {
                                                 charInfo.hotkeys.potions.map((slot, index) => {
                                                     return (
-                                                        <li key={index} className='hotkeys-pots-slot'>
-                                                            {slot === 0? <p style={{ backgroundImage: `url('${images['potions']}')` }} ></p>: (<p style={{ backgroundImage: `url('${images[slot.id]}')` }}></p>)}
+                                                        <li 
+                                                            key={index} 
+                                                            className='hotkeys-pots-slot'
+                                                            data-location={slot === 0? null: 'inventory'} 
+                                                            data-position={slot === 0? null: index}
+                                                            data-quantity={slot === 0? null: slot.quantity}
+                                                            data-name={slot === 0 ? null: slot.name}
+                                                            onDragOver={handleDragOver}
+                                                            onDrop={evt => handleDrop(evt, { location: 'potions', position: index, quantity: slot.quantity })}
+                                                        >
+                                                            {slot === 0? <p style={{ backgroundImage: `url('${images['potions']}')` }} ></p>: (<p style={{ backgroundImage: `url('${images[slot.id]}')` }} onDragStart={evt => handleDragStart(evt, { location: 'spell', position: index, quantity: slot.quantity })} draggable="true" ></p>)}
                                                         </li>
                                                     )
                                                 })

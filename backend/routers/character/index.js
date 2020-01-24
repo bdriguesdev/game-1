@@ -192,15 +192,8 @@ router.post('/hotkeys', async (req, res, next) => {
             return;
         }
         if(to.location === 'potions') {
-            const potion = charInventory[from.position].type;
-            const toItem = charHotkeys[to.location][to.position];
+            const potion = charInventory[from.position];
             if(!potion) {
-                res.json({
-                    error: 'This item doesnt exist.'
-                });
-                return;
-            }
-            if(!toItem) {
                 res.json({
                     error: 'This item doesnt exist.'
                 });
@@ -212,7 +205,7 @@ router.post('/hotkeys', async (req, res, next) => {
                 });
                 return;
             }
-            if(potion !== 'potion') {
+            if(potion.type !== 'hotkey') {
                 res.json({
                     error: 'You can only move a potion there.'
                 });
@@ -224,7 +217,7 @@ router.post('/hotkeys', async (req, res, next) => {
                 });
                 return;
             }
-            charInventory[from.position] = toItem;
+            charInventory[from.position] = 0;
             charHotkeys[to.location][to.position] = potion;
             character.slots.inventory = charInventory;
             character.hotkeys = charHotkeys;
@@ -245,9 +238,13 @@ router.post('/hotkeys', async (req, res, next) => {
             return;
         }
 
+        await character.markModified('slots');
+        await character.markModified('hotkeys');
         await character.save();
         
-        return character;
+        return res.json({
+            character
+        });
 
     } catch (error) {
         console.log(error);
