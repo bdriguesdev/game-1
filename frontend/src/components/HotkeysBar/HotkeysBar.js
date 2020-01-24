@@ -159,6 +159,30 @@ const HotkeysBar = props => {
         }
     }
 
+    const handleUseItem = (from) => {
+        const bodyRequest = {
+            charId,
+            from
+        };
+        fetch('http://localhost:8000/battle/use/' , {
+            method: 'POST',
+            body: JSON.stringify(bodyRequest),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }).then(res => {
+        return res.json();
+        }).then(data => {
+            if(data.error) {
+                console.log(data.error);
+                return;
+            }
+            setCharInfo(data.character);
+        }).catch(err => {
+            console.log(err);
+        })
+    }
+
     return (
         <div className={isHotkeysExpanded? 'hotkeys-container-active': 'hotkeys-container'}>
             {
@@ -183,7 +207,7 @@ const HotkeysBar = props => {
                                                             onDragOver={handleDragOver}
                                                             onDrop={evt => handleDrop(evt, { location: 'potions', position: index, quantity: slot.quantity })}
                                                         >
-                                                            {slot === 0? <p style={{ backgroundImage: `url('${images['potions']}')` }} ></p>: (<p style={{ backgroundImage: `url('${images[slot.id]}')` }} onDragStart={evt => handleDragStart(evt, { location: 'potions', position: index, quantity: slot.quantity })} draggable="true" ></p>)}
+                                                            {slot === 0? <p style={{ backgroundImage: `url('${images['potions']}')` }} ></p>: (<p style={{ backgroundImage: `url('${images[slot.id]}')` }} onDoubleClick={() => handleUseItem({ location: 'potions', position: index, quantity: slot.quantity })} onDragStart={evt => handleDragStart(evt, { location: 'potions', position: index, quantity: slot.quantity })} draggable="true" ></p>)}
                                                         </li>
                                                     )
                                                 })

@@ -195,7 +195,7 @@ const Inventory = props => {
             setCharInfo(data.character);
         }).catch(err => {
             console.log(err);
-        })
+        });
     };
 
     return (

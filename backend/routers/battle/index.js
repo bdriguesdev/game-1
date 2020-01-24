@@ -133,9 +133,9 @@ router.post('/use', async (req, res) => {
             });
         }
         let item;
-        if(from.location === "spells") {
-            item = character.hotkeys.potions[itemHotkeyIndex];
-            character.hotkeys.potions[itemHotkeyIndex] = 0;
+        if(from.location === "potions") {
+            item = character.hotkeys.potions[from.position];
+            character.hotkeys.potions[from.position] = 0;
         } else if(from.location === "inventory") {
             item = character.slots.inventory[from.position];
             character.slots.inventory[from.position] = 0;
