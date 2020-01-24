@@ -6,6 +6,8 @@ import images from '../../utils/images';
 
 const HotkeysBar = props => {
     const [isHotkeysExpanded, setIsHotkeysExpanded] = useState(true);
+    const [itemInfo, setItemInfo] = useState(null);
+    const [isDetailsActive, setIsDetailsActive] = useState(false);
 
     const { charId, charInfo, setCharInfo } = useContext(MainContext);
 
@@ -181,6 +183,21 @@ const HotkeysBar = props => {
         }).catch(err => {
             console.log(err);
         })
+    };
+
+    const handleMouseEnter = (evt, slot) => {
+        const { target } = evt;
+        const details = document.getElementById('potions-details');
+        if(slot !== 0) {
+            details.style.top = `${target.offsetTop - 10}px`
+            details.style.left = `${target.offsetLeft + 45}px`
+            setItemInfo(slot);
+            setIsDetailsActive(true);
+        }
+    };
+
+    const handleMouseLeave = evt => {
+        setIsDetailsActive(false);
     }
 
     return (
@@ -192,6 +209,15 @@ const HotkeysBar = props => {
                             <div className='hotkeys-btn' onClick={handleClick}>-</div>
                             <div className='hotkeys'>
                                 <div className="hotkeys-container-slots" hidden={!isHotkeysExpanded}>
+                                    <div className={`potions-details`} hidden={isDetailsActive? false: true} id='potions-details'>
+                                        {
+                                            itemInfo && ([
+                                                <p className="strong" key='item-name'>{itemInfo.name}</p>,
+                                                <div className="detail-line" key="line-one"></div>,
+                                                <p className="medium" key='item-type'>health {itemInfo.health[0] + '-' + itemInfo.health[1]}</p>
+                                            ])
+                                        }
+                                    </div>
                                     <div className="hotkeys-pots">
                                         <ul className='hotkeys-pots-slots'>
                                             {
@@ -206,8 +232,10 @@ const HotkeysBar = props => {
                                                             data-name={slot === 0 ? null: slot.name}
                                                             onDragOver={handleDragOver}
                                                             onDrop={evt => handleDrop(evt, { location: 'potions', position: index, quantity: slot.quantity })}
+                                                            onMouseEnter={evt => handleMouseEnter(evt, slot)}
+                                                            onMouseLeave={handleMouseLeave}
                                                         >
-                                                            {slot === 0? <p style={{ backgroundImage: `url('${images['potions']}')` }} ></p>: (<p style={{ backgroundImage: `url('${images[slot.id]}')` }} onDoubleClick={() => handleUseItem({ location: 'potions', position: index, quantity: slot.quantity })} onDragStart={evt => handleDragStart(evt, { location: 'potions', position: index, quantity: slot.quantity })} draggable="true" ></p>)}
+                                                            {slot === 0? <p style={{ backgroundImage: `url('${images['potions']}')` }} ></p>: (<p style={{ backgroundImage: `url('${images[slot.id]}')` }} onMouseEnter={evt => handleMouseEnter(evt, slot)} onDoubleClick={() => handleUseItem({ location: 'potions', position: index, quantity: slot.quantity })} onDragStart={evt => handleDragStart(evt, { location: 'potions', position: index, quantity: slot.quantity })} draggable="true" ></p>)}
                                                         </li>
                                                     )
                                                 })
