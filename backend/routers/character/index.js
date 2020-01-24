@@ -201,13 +201,13 @@ router.post('/hotkeys', async (req, res, next) => {
             }
             if(from.location !== 'inventory') {
                 res.json({
-                    error: 'You can only move a potion from your character inventory.'
+                    error: 'You can only move an potion from your character inventory.'
                 });
                 return;
             }
             if(potion.type !== 'hotkey') {
                 res.json({
-                    error: 'You can only move a potion there.'
+                    error: 'You can only move an potion there.'
                 });
                 return;
             }
@@ -219,6 +219,30 @@ router.post('/hotkeys', async (req, res, next) => {
             }
             charInventory[from.position] = 0;
             charHotkeys[to.location][to.position] = potion;
+            character.slots.inventory = charInventory;
+            character.hotkeys = charHotkeys;
+        } else if(to.location === 'inventory') {
+            const potion = charHotkeys[from.location][from.position];
+            if(!potion) {
+                res.json({
+                    error: 'This item doesnt exist.'
+                });
+                return;
+            }
+            if(from.location !== 'potions') {
+                res.json({
+                    error: 'You can only move an potion from your character hotkeys.'
+                });
+                return;
+            }
+            if(to.position > 15 && to.position < 0 ) {
+                res.json({
+                    error: 'You cant move the potion to this position.'
+                });
+                return;
+            } 
+            charInventory[to.position] = potion;
+            charHotkeys[from.location][from.position] = 0;
             character.slots.inventory = charInventory;
             character.hotkeys = charHotkeys;
         } else if (to.location === 'spells') {

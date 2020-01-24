@@ -183,7 +183,7 @@ const HotkeysBar = props => {
                                                             onDragOver={handleDragOver}
                                                             onDrop={evt => handleDrop(evt, { location: 'potions', position: index, quantity: slot.quantity })}
                                                         >
-                                                            {slot === 0? <p style={{ backgroundImage: `url('${images['potions']}')` }} ></p>: (<p style={{ backgroundImage: `url('${images[slot.id]}')` }} onDragStart={evt => handleDragStart(evt, { location: 'spell', position: index, quantity: slot.quantity })} draggable="true" ></p>)}
+                                                            {slot === 0? <p style={{ backgroundImage: `url('${images['potions']}')` }} ></p>: (<p style={{ backgroundImage: `url('${images[slot.id]}')` }} onDragStart={evt => handleDragStart(evt, { location: 'potions', position: index, quantity: slot.quantity })} draggable="true" ></p>)}
                                                         </li>
                                                     )
                                                 })

@@ -95,6 +95,38 @@ const Inventory = props => {
             }).catch(err => {
                 console.log(err);
             })
+        } else if(location === 'potions') {
+            const bodyRequest = {
+                charId,
+                from: {
+                    location,
+                    position,
+                    quantity: quantity? +quantity: 0
+                },
+                to: {
+                    location: data.location,
+                    position: +data.position,
+                    quantity: data.quantity? +data.quantity: 0
+                }
+            }
+            fetch('http://localhost:8000/character/hotkeys/' , {
+                method: 'POST',
+                body: JSON.stringify(bodyRequest),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }).then(res => {
+            return res.json();
+            }).then(data => {
+                if(data.error) {
+                    console.log(data.error);
+                    return;
+                }
+                setCharInfo(data.character);
+                console.log(data.character);
+            }).catch(err => {
+                console.log(err);
+            })
         } else {
             const bodyRequest = {
                 charId,
@@ -125,7 +157,7 @@ const Inventory = props => {
                 setCharInfo(data.character);
             }).catch(err => {
                 console.log(err);
-            })
+            });
         }
     }
 
