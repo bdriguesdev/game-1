@@ -1,10 +1,9 @@
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 import './Login.css';
 import { logIn } from '../../actions/auth';
-import MainContext from '../../contexts/MainContext.js';
 
 function mapDispatchToProps(dispatch) {
     return {
