@@ -6,6 +6,7 @@ import images from '../../utils/images';
 import shop from '../../utils/shop';
 import './ShopContainer.css';
 import { setCharacter } from '../../actions/character';
+import { moveFromShopToInv } from '../../actions/inventory';
 
 const mapStateToProps = state => {
     return {
@@ -15,7 +16,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        setCharacter: character => dispatch(setCharacter(character))
+        setCharacter: character => dispatch(setCharacter(character)),
+        moveFromShopToInv: data => dispatch(moveFromShopToInv(data))
     };
 };
 
@@ -72,23 +74,7 @@ const ConnectedShopContainer = props => {
                     quantity: data.quantity? +data.quantity: 0
                 }
             }
-            fetch('http://localhost:8000/shop' , {
-                method: 'POST',
-                body: JSON.stringify(bodyRequest),
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            }).then(res => {
-            return res.json();
-            }).then(data => {
-                if(data.error) {
-                    console.log(data.error);
-                    return;
-                }
-                props.setCharacter(data.character);
-            }).catch(err => {
-                console.log(err);
-            })
+            props.moveFromShopToInv(bodyRequest);
         }
     }
 

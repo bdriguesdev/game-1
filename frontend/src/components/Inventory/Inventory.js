@@ -5,6 +5,7 @@ import ItemDetails from '../ItemDetails/ItemDetails';
 import './Inventory.css';
 import images from '../../utils/images';
 import { setCharacter } from '../../actions/character'
+import { moveInv, moveFromShopToInv, moveFromPotionsToInv, moveFromSetToInv } from '../../actions/inventory';
 
 const mapStateToProps = state => {
     return {
@@ -14,7 +15,11 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        setCharacter: character => dispatch(setCharacter(character))
+        setCharacter: character => dispatch(setCharacter(character)),
+        moveInv: data => dispatch(moveInv(data)),
+        moveFromShopToInv: data => dispatch(moveFromShopToInv(data)),
+        moveFromPotionsToInv: data => dispatch(moveFromPotionsToInv(data)),
+        moveFromSetToInv: data => dispatch(moveFromSetToInv(data))
     };
 };
 
@@ -43,130 +48,27 @@ const ConnectedInventory = props => {
                 return;
             }
         }
+        const bodyRequest = {
+            charId: props.character._id,
+            from: {
+                location,
+                position,
+                quantity: quantity? +quantity: 0
+            },
+            to: {
+                location: data.location,
+                position: +data.position,
+                quantity: data.quantity? +data.quantity: 0
+            }
+        };
         if(location === 'set') {
-            const bodyRequest = {
-                charId: props.character._id,
-                from: {
-                    location,
-                    position,
-                    quantity: quantity? +quantity: 0
-                },
-                to: {
-                    location: data.location,
-                    position: +data.position,
-                    quantity: data.quantity? +data.quantity: 0
-                }
-            }
-            fetch('http://localhost:8000/character/set' , {
-                method: 'POST',
-                body: JSON.stringify(bodyRequest),
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            }).then(res => {
-            return res.json();
-            }).then(data => {
-                if(data.error) {
-                    console.log(data.error);
-                    return;
-                }
-                props.setCharacter(data.character);
-            }).catch(err => {
-                console.log(err);
-            })
+            props.moveFromSetToInv(bodyRequest);
         } else if( location === 'shop') {
-            const bodyRequest = {
-                charId: props.character._id,
-                from: {
-                    location,
-                    position,
-                    quantity: quantity? +quantity: 0
-                },
-                to: {
-                    location: data.location,
-                    position: +data.position,
-                    quantity: data.quantity? +data.quantity: 0
-                }
-            }
-            fetch('http://localhost:8000/shop/' , {
-                method: 'POST',
-                body: JSON.stringify(bodyRequest),
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            }).then(res => {
-            return res.json();
-            }).then(data => {
-                if(data.error) {
-                    console.log(data.error);
-                    return;
-                }
-                props.setCharacter(data.character);
-            }).catch(err => {
-                console.log(err);
-            })
+            props.moveFromShopToInv(bodyRequest);
         } else if(location === 'potions') {
-            const bodyRequest = {
-                charId: props.character._id,
-                from: {
-                    location,
-                    position,
-                    quantity: quantity? +quantity: 0
-                },
-                to: {
-                    location: data.location,
-                    position: +data.position,
-                    quantity: data.quantity? +data.quantity: 0
-                }
-            }
-            fetch('http://localhost:8000/character/hotkeys/' , {
-                method: 'POST',
-                body: JSON.stringify(bodyRequest),
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            }).then(res => {
-            return res.json();
-            }).then(data => {
-                if(data.error) {
-                    console.log(data.error);
-                    return;
-                }
-                props.setCharacter(data.character);
-            }).catch(err => {
-                console.log(err);
-            })
+            props.moveFromPotionsToInv(bodyRequest);
         } else {
-            const bodyRequest = {
-                charId: props.character._id,
-                from: {
-                    location,
-                    position,
-                    quantity: quantity? +quantity: 0
-                },
-                to: {
-                    location: data.location,
-                    position: +data.position,
-                    quantity: data.quantity? +data.quantity: 0
-                }
-            }
-            fetch('http://localhost:8000/inventory' , {
-                method: 'POST',
-                body: JSON.stringify(bodyRequest),
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            }).then(res => {
-            return res.json();
-            }).then(data => {
-                if(data.error) {
-                    console.log(data.error);
-                    return;
-                }
-                props.setCharacter(data.character);
-            }).catch(err => {
-                console.log(err);
-            });
+            props.moveInv(bodyRequest);
         }
     }
 

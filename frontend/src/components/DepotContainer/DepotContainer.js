@@ -4,7 +4,8 @@ import { connect } from 'react-redux';
 import ItemDetails from '../ItemDetails/ItemDetails';
 import './DepotContainer.css';
 import images from '../../utils/images';
-import { setCharacter } from '../../actions/character'
+import { setCharacter } from '../../actions/character';
+import {moveInv } from '../../actions/inventory';
 
 const mapStateToProps = state => {
     return {
@@ -14,7 +15,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        setCharacter: character => dispatch(setCharacter(character))
+        setCharacter: character => dispatch(setCharacter(character)),
+        moveInv: data => dispatch(moveInv(data))
     };
 };
 
@@ -55,23 +57,7 @@ const ConnectedDepotContainer = props => {
                 quantity: data.quantity? +data.quantity: 0
             }
         }
-        fetch('http://localhost:8000/inventory' , {
-            method: 'POST',
-            body: JSON.stringify(bodyRequest),
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        }).then(res => {
-           return res.json();
-        }).then(data => {
-            if(data.error) {
-                console.log(data.error);
-                return;
-            }
-            props.setCharacter(data.character);
-        }).catch(err => {
-            console.log(err);
-        })
+        props.moveInv(bodyRequest);
     }
 
     const handleMouseEnter = (evt, slot) => {
