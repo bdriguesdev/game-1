@@ -54,9 +54,15 @@ const ConnectedHotkeysBar = props => {
             const action = props.character.hotkeys[keyPressedInfo[1]][keyPressedInfo[0]];
             if(action !== 0) {
                 if(keyPressedInfo[1] === 'potions') {
-
+                    props.useItem({ charId: props.character._id, from: { location: 'potions', position: keyPressedInfo[0], quantity: 1 } });
                 } else {
-
+                    props.attack({ charId: props.character._id, spell: action.hotkey })
+                        .then(({ data }) => {
+                            displayAnimation(data.character, data.itemsDroppedQuant, data.characterAttack, data.monsterAttack);
+                            props.setCharacter(data.character);
+                        }).catch(err => {
+                            console.log(err);
+                        });
                 }
             }
         }
@@ -129,26 +135,30 @@ const ConnectedHotkeysBar = props => {
         const requestBody = {
             charId: props.character._id,
             spell
-        }
+        };
         props.attack(requestBody)
             .then(({ data }) => {
-                if (data.character.goldCoins - props.character.goldCoins > 0) {
-                    goldCoinsDropAnimation(data.character.goldCoins - props.character.goldCoins);
-                }
-                if(data.characterAttack.totalDamage > 0) {
-                    displayAttackAnimation('enemy', data.characterAttack);
-                } 
-                if(data.monsterAttack.totalDamage > 0) {
-                    displayAttackAnimation('character', data.monsterAttack);
-                }
-                if(data.itemsDroppedQuant && data.itemsDroppedQuant > 0) {
-                    console.log('DROP');
-                    lootDropAnimation(data.itemsDroppedQuant);
-                }
+                displayAnimation(data.character, data.itemsDroppedQuant, data.characterAttack, data.monsterAttack);
                 props.setCharacter(data.character);
             }).catch(err => {
                 console.log(err);
             });
+    };
+
+    const displayAnimation = (character, itemsDroppedQuant, characterAttack, monsterAttack) => {
+        if (character.goldCoins - props.character.goldCoins > 0) {
+            goldCoinsDropAnimation(character.goldCoins - props.character.goldCoins);
+        }
+        if(characterAttack.totalDamage > 0) {
+            displayAttackAnimation('enemy', characterAttack);
+        } 
+        if(monsterAttack.totalDamage > 0) {
+            displayAttackAnimation('character', monsterAttack);
+        }
+        if(itemsDroppedQuant && itemsDroppedQuant > 0) {
+            console.log('DROP');
+            lootDropAnimation(itemsDroppedQuant);
+        }
     };
 
     const handleDragStart = (evt, data) => {
