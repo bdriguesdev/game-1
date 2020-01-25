@@ -1,16 +1,20 @@
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
+import { connect } from 'react-redux';
 
 import './Loot.css';
 import images from '../../utils/images';
-import statsNames from '../../utils/statsNames';
-import MainContext from '../../contexts/MainContext.js';
+import ItemDetails from '../../components/ItemDetails/ItemDetails'
 
-const Loot = props => {
+const mapStateToProps = state => {
+    return {
+        character: state.character
+    };
+};
+
+const ConnectedLoot = props => {
     const [isLootExpanded, setIsLootExpanded] = useState(false);
-    const [isDetailsActive, setIsDetailsActive] = useState(false);
     const [itemInfo, setItemInfo ] = useState(null);
-
-    const { charInfo } = useContext(MainContext);
+    const [slotPosition, setSlotPosition] = useState(null);
 
     const handleClick = evt => {
         setIsLootExpanded(prev => !prev);
@@ -27,47 +31,28 @@ const Loot = props => {
     }
     const handleMouseEnter = (evt, slot) => {
         const { target } = evt;
-        const details = document.getElementById('loot-details');
         if(slot !== 0) {
-            details.style.top = `${target.offsetTop - 10}px`
-            details.style.left = `${target.offsetLeft + 45}px`
             setItemInfo(slot);
-            setIsDetailsActive(true);
+            setSlotPosition({
+                top: target.offsetTop,
+                left: target.offsetLeft
+            });
         }
     };
 
-    const handleMouseLeave = evt => {
-        setIsDetailsActive(false);
+    const handleMouseLeave = () => {
+        setItemInfo(null);
     }
     return(
         <div className={isLootExpanded? 'loot-container-active': 'loot-container' }>
-            <div className={`loot-details`} hidden={isDetailsActive? false: true} id='loot-details'>
-                {
-                    itemInfo && ([
-                        <p className="strong" key='item-name'>T{itemInfo.tier} {itemInfo.name}</p>,
-                        <div className="detail-line" key="line-one"></div>,
-                        <p className="medium" key='item-type'>{statsNames[itemInfo.type]}</p>,
-                        itemInfo.base.map((stat, index) => {
-                            return (
-                                <p className="medium" key={"base"+index}>{statsNames[stat.stat]} +{stat.value}</p>
-                            )
-                        }),
-                        <div className="detail-line" key="line-two"></div>,
-                        itemInfo.stats.map((stat, index) => {
-                            return (
-                                <p className="light" key={"stat"+index}>{statsNames[stat.stat]} +{stat.value}</p>
-                            )
-                        }),
-                    ])
-                }
-            </div>
+            <ItemDetails itemInfo={itemInfo} slotPosition={slotPosition} where={"loot"} />
             {
                 isLootExpanded?
                     (
                         <React.Fragment>
                             <ul className="loot-slots">
                                 { 
-                                    charInfo.slots.loot.map((slot, index) => {
+                                    props.character.slots.loot.map((slot, index) => {
                                         return (
                                             <li 
                                                 onDragOver={handleDragOver}
@@ -92,5 +77,7 @@ const Loot = props => {
         </div>
     );
 };
+
+const Loot = connect(mapStateToProps)(ConnectedLoot);
 
 export default Loot;

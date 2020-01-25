@@ -10,7 +10,7 @@ const ItemDetails = props => {
             className={`item-details`} 
             hidden={props.itemInfo? false: true} 
             id='item-details'
-            style={props.slotPosition? { top:`${props.slotPosition.top - 80}px`, left: `${props.slotPosition.left + 40}px ` }: {}}
+            style={props.slotPosition? { top: props.where? `${props.slotPosition.top}px`: `${props.slotPosition.top - 80}px`, left: `${props.slotPosition.left + 40}px ` }: {}}
         >
             {
                 props.itemInfo &&
