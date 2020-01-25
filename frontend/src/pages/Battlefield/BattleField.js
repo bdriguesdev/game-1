@@ -1,15 +1,19 @@
-import React, { useContext } from 'react';
+import React from 'react';
+import { connect } from 'react-redux';
 
 import './BattleField.css';
 import Character from '../../components/Character/Character';
 import Enemy from '../../components/Enemy/Enemy';
 import Loot from '../../components/Loot/Loot';
-import MainContext from '../../contexts/MainContext';
 import HotkeysBar from '../../components/HotkeysBar/HotkeysBar';
 
-const BattleField = props => {
+const mapStateToProps = state => {
+    return {
+        character: state.character
+    };
+};
 
-    const { charInfo } = useContext(MainContext);
+const ConnectedBattleField = props => {
 
     return(
         <div className='battlefield'>
@@ -18,7 +22,7 @@ const BattleField = props => {
                 <Character />
                 <div className='versus-img'>X</div>
                 {
-                    charInfo.battle[0] ? 
+                    props.character.battle[0] ? 
                         (<Enemy />):
                         (<p>Nothing here</p>)
                 }
@@ -28,5 +32,7 @@ const BattleField = props => {
         </div>
     )
 }
+
+const BattleField = connect(mapStateToProps)(ConnectedBattleField);
 
 export default BattleField;
