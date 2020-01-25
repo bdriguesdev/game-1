@@ -6,6 +6,7 @@ import ItemDetails from '../ItemDetails/ItemDetails';
 import images from '../../utils/images';
 import { setCharacter } from '../../actions/character';
 import { moveFromPotionsToInv } from '../../actions/inventory';
+import { useItem, attack } from '../../actions/battle';
  
 const mapStateToProps = state => {
     return {
@@ -16,7 +17,9 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         setCharacter: character => dispatch(setCharacter(character)),
-        moveFromPotionsToInv: data => dispatch(moveFromPotionsToInv(data))
+        moveFromPotionsToInv: data => dispatch(moveFromPotionsToInv(data)),
+        useItem: data => dispatch(useItem(data)),
+        attack: data => dispatch(attack(data))
     };
 };
 
@@ -127,32 +130,25 @@ const ConnectedHotkeysBar = props => {
             charId: props.character._id,
             spell
         }
-        fetch('http://localhost:8000/battle/attack', {
-            method: 'POST',
-            body: JSON.stringify(requestBody),
-            headers: {
-                'Content-Type': 'application/json'
-            } 
-        }).then(res => {
-            return res.json();
-        }).then(data => {
-            if (data.character.goldCoins - props.character.goldCoins > 0) {
-                goldCoinsDropAnimation(data.character.goldCoins - props.character.goldCoins);
-            }
-            props.setCharacter(data.character);
-            if(data.characterAttack.totalDamage > 0) {
-                displayAttackAnimation('enemy', data.characterAttack);
-            } 
-            if(data.monsterAttack.totalDamage > 0) {
-                displayAttackAnimation('character', data.monsterAttack);
-            }
-            if(data.itemsDroppedQuant && data.itemsDroppedQuant > 0) {
-                console.log('DROP');
-                lootDropAnimation(data.itemsDroppedQuant);
-            }
-        }).catch(err => {
-            console.log(err);
-        })
+        props.attack(requestBody)
+            .then(({ data }) => {
+                if (data.character.goldCoins - props.character.goldCoins > 0) {
+                    goldCoinsDropAnimation(data.character.goldCoins - props.character.goldCoins);
+                }
+                if(data.characterAttack.totalDamage > 0) {
+                    displayAttackAnimation('enemy', data.characterAttack);
+                } 
+                if(data.monsterAttack.totalDamage > 0) {
+                    displayAttackAnimation('character', data.monsterAttack);
+                }
+                if(data.itemsDroppedQuant && data.itemsDroppedQuant > 0) {
+                    console.log('DROP');
+                    lootDropAnimation(data.itemsDroppedQuant);
+                }
+                props.setCharacter(data.character);
+            }).catch(err => {
+                console.log(err);
+            });
     };
 
     const handleDragStart = (evt, data) => {
@@ -198,23 +194,7 @@ const ConnectedHotkeysBar = props => {
             charId: props.character._id,
             from
         };
-        fetch('http://localhost:8000/battle/use/' , {
-            method: 'POST',
-            body: JSON.stringify(bodyRequest),
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        }).then(res => {
-        return res.json();
-        }).then(data => {
-            if(data.error) {
-                console.log(data.error);
-                return;
-            }
-            props.setCharacter(data.character);
-        }).catch(err => {
-            console.log(err);
-        })
+        props.useItem(bodyRequest);
     };
 
     const handleMouseEnter = (evt, slot) => {

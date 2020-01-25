@@ -6,6 +6,7 @@ import './Inventory.css';
 import images from '../../utils/images';
 import { setCharacter } from '../../actions/character'
 import { moveInv, moveFromShopToInv, moveFromPotionsToInv, moveFromSetToInv } from '../../actions/inventory';
+import { useItem } from '../../actions/battle';
 
 const mapStateToProps = state => {
     return {
@@ -19,7 +20,8 @@ const mapDispatchToProps = dispatch => {
         moveInv: data => dispatch(moveInv(data)),
         moveFromShopToInv: data => dispatch(moveFromShopToInv(data)),
         moveFromPotionsToInv: data => dispatch(moveFromPotionsToInv(data)),
-        moveFromSetToInv: data => dispatch(moveFromSetToInv(data))
+        moveFromSetToInv: data => dispatch(moveFromSetToInv(data)),
+        useItem: data => dispatch(useItem(data))
     };
 };
 
@@ -92,23 +94,7 @@ const ConnectedInventory = props => {
             charId: props.character._id,
             from
         };
-        fetch('http://localhost:8000/battle/use/' , {
-            method: 'POST',
-            body: JSON.stringify(bodyRequest),
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        }).then(res => {
-        return res.json();
-        }).then(data => {
-            if(data.error) {
-                console.log(data.error);
-                return;
-            }
-            props.setCharacter(data.character);
-        }).catch(err => {
-            console.log(err);
-        });
+        props.useItem(bodyRequest);
     };
 
     return (
