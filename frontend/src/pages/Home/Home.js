@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 
 import './Home.css'
 import MainContext from '../../contexts/MainContext.js';
@@ -8,14 +9,21 @@ import Inventory from '../../components/Inventory/Inventory';
 import SetInventory from '../../components/SetInventory/SetInventory';
 import CharacterSVG from '../../assets/Character.svg';
 
-const Home = props => {
-    // const [number, setNumber] = useState(1);
+const mapStateToProps = state => {
+    return {
+        userId: state.userId,
+        token: state.token,
+        user: state.user
+    }
+};
+
+const ConnectedHome = props => {
     const [charactersList, setCharactersList] = useState([]);
     //here i can create 2 components => characterselector and characterstats to be in the home page, if the character is selected they change
-    const { setCharInfo, charId, setCharId, charInfo, setCharSlots, userId } = useContext(MainContext);
+    const { setCharInfo, charId, setCharId, charInfo, setCharSlots } = useContext(MainContext);
 
-    const requestBody = { userId };
     useEffect(() => {
+        const requestBody = { userId: props.userId };
         fetch('http://localhost:8000/user/characterslist', {
             method: 'POST',
             body: JSON.stringify(requestBody),
@@ -29,13 +37,8 @@ const Home = props => {
         }).catch(err => {
             console.log(err);
         })
-    });
+    }, [props.userId]);
 
-    // const handleClickTest = evt => {
-    //     setNumber(prev => {
-    //         return prev + 1;
-    //     });
-    // };
     const handleCharSelect = (evt, char) => {
         setCharId(char._id);
         setCharInfo(char);
@@ -179,5 +182,7 @@ const Home = props => {
         </div>
     )
 };
+
+const Home = connect(mapStateToProps)(ConnectedHome);
 
 export default Home;

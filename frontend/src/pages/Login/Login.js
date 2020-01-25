@@ -1,40 +1,52 @@
 import React, { useState, useContext } from 'react';
+import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 import './Login.css';
+import { logIn } from '../../actions/auth';
 import MainContext from '../../contexts/MainContext.js';
 
-const Login = props => {
+function mapDispatchToProps(dispatch) {
+    return {
+        logIn: credentials => dispatch(logIn(credentials))
+    };
+} 
+
+const ConnectedLogin = props => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
-    const { setToken, setUserId } = useContext(MainContext);
+    // const { setToken, setUserId } = useContext(MainContext);
 
-    const requestBody = {
-        email,
-        password
-    };
+    // const requestBody = {
+    //     email,
+    //     password
+    // };
 
     const handleSubmit = evt => {
         evt.preventDefault();
-        fetch('http://localhost:8000/login', {
-            method: 'POST',
-            body: JSON.stringify(requestBody),
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        }).then(res => {
-            return res.json();
-        }).then(resData => {
-            if(resData.error) {
-                console.log(resData.error);
-            } else {
-                setUserId(resData.userId);
-                setToken(resData.token);
-            }
-        }).catch(err => {
-            console.log(err);
+        props.logIn({
+            email,
+            password
         });
+        // fetch('http://localhost:8000/login', {
+        //     method: 'POST',
+        //     body: JSON.stringify(requestBody),
+        //     headers: {
+        //         'Content-Type': 'application/json'
+        //     }
+        // }).then(res => {
+        //     return res.json();
+        // }).then(resData => {
+        //     if(resData.error) {
+        //         console.log(resData.error);
+        //     } else {
+        //         setUserId(resData.userId);
+        //         setToken(resData.token);
+        //     }
+        // }).catch(err => {
+        //     console.log(err);
+        // });
 
         setEmail('');
         setPassword('');
@@ -74,5 +86,10 @@ const Login = props => {
         </div>
     )
 };
+
+const Login = connect(
+    null,
+    mapDispatchToProps
+)(ConnectedLogin);
 
 export default Login;

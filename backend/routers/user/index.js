@@ -51,6 +51,7 @@ router.post('/user/characterslist', async (req, res, next) => {
             });
             return;
         }
+        console.log('here');
         res.json(user.characters);
         return;
     } catch (error) {

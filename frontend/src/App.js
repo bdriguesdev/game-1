@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Route, Redirect, Switch } from 'react-router-dom'
+import { connect } from 'react-redux';
 
 import './App.css';
 import Login from './pages/Login/Login';
@@ -15,8 +16,15 @@ import Talents from './pages/Talents/Talents';
 import Depot from './pages/Depot/Depot';
 import Shop from './pages/Shop/Shop';
 
-function App() {
-  const [token, setToken] = useState(null);
+const mapStateToProps = state => {
+  return {
+    token: state.token,
+    user: state.user,
+    userId: state.userId
+  }
+};
+
+function ConnectedApp(props) {
   const [userId, setUserId] = useState(null);
   const [userInfo, setUserInfo] = useState(null);
   const [charId, setCharId] = useState(null);
@@ -27,18 +35,18 @@ function App() {
   
   return (
     <Router>
-      <MainContext.Provider value={{ token, setToken, userId, setUserId, userInfo, setUserInfo, charId, setCharId, charInfo, setCharInfo, charSlots, setCharSlots, characterAttack, setCharacterAttack, monsterAttack, setMonsterAttack }}>
+      <MainContext.Provider value={{ userId, setUserId, userInfo, setUserInfo, charId, setCharId, charInfo, setCharInfo, charSlots, setCharSlots, characterAttack, setCharacterAttack, monsterAttack, setMonsterAttack }}>
         <div className="App">
           <NavBar />
           <Switch>
-            {!token && ([
+            {!props.token && ([
               <Redirect exact from="/" to='/login' key='0'/>,
               <Route path="/login" component={Login} key='1'/>,
               <Route path="/register" component={Register} key='2'/>,
               <Route path="/about" component={About} key='3'/>,
               <Redirect from='*' to='/login' key='4'/>
             ])}
-            {token && !charId && ([
+            {props.token && !charId && ([
               <Redirect exact from="/" to='/home' key='0'/>,
               <Redirect exact from="/login" to='/home' key='1'/>,
               <Route path='/home' component={Home} key='2'/>,
@@ -46,7 +54,7 @@ function App() {
               <Route path="/about" component={About} key='4'/>,
               <Redirect from='*' to='/home' key='5'/>
             ])}
-            {token && charId && ([
+            {props.token && charId && ([
               <Redirect exact from="/" to='/home' key='0'/>,
               <Route path='/home' component={Home} key='1'/>,
               <Route path='/charcreation' component={CharCreation} key='2'/>,
@@ -73,5 +81,7 @@ function App() {
     </Router>
   );
 }
+
+const App = connect(mapStateToProps)(ConnectedApp);
 
 export default App;

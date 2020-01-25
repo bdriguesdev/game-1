@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 
 import './HotkeysBar.css';
 import MainContext from '../../contexts/MainContext.js';
@@ -9,8 +9,42 @@ const HotkeysBar = props => {
     const [isHotkeysExpanded, setIsHotkeysExpanded] = useState(true);
     const [itemInfo, setItemInfo] = useState(null);
     const [slotPosition, setSlotPosition] = useState(null);
+    const [spellHotkeys] = useState(['Q', 'W', 'E', 'R', 'T', 'Y']);
 
     const { charId, charInfo, setCharInfo } = useContext(MainContext);
+
+    useEffect(() => {
+        document.addEventListener('keyup', handleHotkeysKeys);
+        return () => {
+            document.removeEventListener('keyup', handleHotkeysKeys);
+        }
+    });
+
+    const handleHotkeysKeys = evt => {
+        const keys = {
+            '1': [0, 'potions'],
+            '2': [1, 'potions'],
+            '3': [2, 'potions'],
+            '4': [3, 'potions'],
+            'Q': [0, 'spells'],
+            'W': [1, 'spells'],
+            'E': [2, 'spells'],
+            'R': [3, 'spells'],
+            'T': [4, 'spells'],
+            'Y': [5, 'spells']
+        };
+        const keyPressedInfo = keys[String.fromCharCode(evt.keyCode)];
+        if(keyPressedInfo) {
+            const action = charInfo.hotkeys[keyPressedInfo[1]][keyPressedInfo[0]];
+            if(action !== 0) {
+                if(keyPressedInfo[1] === 'potions') {
+
+                } else {
+
+                }
+            }
+        }
+    };
 
     const handleClick = evt => {
         setIsHotkeysExpanded(prev => {
@@ -149,7 +183,7 @@ const HotkeysBar = props => {
                     'Content-Type': 'application/json'
                 }
             }).then(res => {
-            return res.json();
+                return res.json();
             }).then(data => {
                 if(data.error) {
                     console.log(data.error);
@@ -228,7 +262,22 @@ const HotkeysBar = props => {
                                                             onMouseEnter={evt => handleMouseEnter(evt, slot)}
                                                             onMouseLeave={handleMouseLeave}
                                                         >
-                                                            {slot === 0? <p style={{ backgroundImage: `url('${images['potions']}')` }} ></p>: (<p style={{ backgroundImage: `url('${images[slot.id]}')` }} onMouseEnter={evt => handleMouseEnter(evt, slot)} onDoubleClick={() => handleUseItem({ location: 'potions', position: index, quantity: slot.quantity })} onDragStart={evt => handleDragStart(evt, { location: 'potions', position: index, quantity: slot.quantity })} draggable="true" ></p>)}
+                                                            {
+                                                                slot === 0? 
+                                                                    <p style={{ backgroundImage: `url('${images['potions']}')` }} >
+                                                                        <span className="key-hotkey">{index + 1}</span>
+                                                                    </p>
+                                                                    : 
+                                                                    (<p 
+                                                                        style={{ backgroundImage: `url('${images[slot.id]}')` }} 
+                                                                        onMouseEnter={evt => handleMouseEnter(evt, slot)} 
+                                                                        onDoubleClick={() => handleUseItem({ location: 'potions', position: index, quantity: slot.quantity })} 
+                                                                        onDragStart={evt => handleDragStart(evt, { location: 'potions', position: index, quantity: slot.quantity })} 
+                                                                        draggable="true" 
+                                                                    >
+                                                                        <span className="key-hotkey">{index + 1}</span>
+                                                                    </p>)
+                                                            }
                                                         </li>
                                                     )
                                                 })
@@ -247,7 +296,18 @@ const HotkeysBar = props => {
                                                                 onMouseEnter={evt => handleMouseEnter(evt, slot)}
                                                                 onMouseLeave={handleMouseLeave}
                                                             >
-                                                                {slot === 0? "": (<p style={{ backgroundImage: `url('${images[slot.hotkey]}')` }} onMouseEnter={evt => handleMouseEnter(evt, slot)} className="hotkey-spell-icon"></p>)}
+                                                                {
+                                                                    slot === 0? 
+                                                                        <span className="key-hotkey">{spellHotkeys[index]}</span>
+                                                                        : 
+                                                                        (<p 
+                                                                            style={{ backgroundImage: `url('${images[slot.hotkey]}')` }} 
+                                                                            onMouseEnter={evt => handleMouseEnter(evt, slot)} 
+                                                                            className="hotkey-spell-icon"
+                                                                        >
+                                                                            <span className="key-hotkey">{spellHotkeys[index]}</span>
+                                                                        </p>)
+                                                                }
                                                             </li>
                                                         );
                                                     })
