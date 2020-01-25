@@ -1,23 +1,34 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
+import { connect } from 'react-redux';
 
 import './Talents.css';
-import MainContext from '../../contexts/MainContext';
+import { setCharacter } from '../../actions/character';
 
-const Talents = props => {
+const mapStateToProps = state => {
+    return {
+        character: state.character
+    };
+};
+
+const mapDispatchToProps = dispatch => {
+    return {
+        setCharacter: character => dispatch(setCharacter(character))
+    };
+};
+
+const ConnectedTalents = props => {
     const [strength, setStrength] = useState(0);
     const [dexterity, setDexterity] = useState(0);
     const [intelligence, setIntelligence] = useState(0);
     const [resistance, setResistance] = useState(0);
     const [talentsPointsLeft, setTalentsPointsLeft] = useState(0);
 
-    const { charInfo, setCharInfo ,charId } = useContext(MainContext);
-
     useEffect(() => {
-        setStrength(charInfo.talents.strength);
-        setDexterity(charInfo.talents.dexterity);
-        setIntelligence(charInfo.talents.intelligence);
-        setResistance(charInfo.talents.resistance);
-        const talentPoints = charInfo.talentPoints - (charInfo.talents.strength + charInfo.talents.dexterity + charInfo.talents.intelligence + charInfo.talents.resistance);
+        setStrength(props.character.talents.strength);
+        setDexterity(props.character.talents.dexterity);
+        setIntelligence(props.character.talents.intelligence);
+        setResistance(props.character.talents.resistance);
+        const talentPoints = props.character.talentPoints - (props.character.talents.strength + props.character.talents.dexterity + props.character.talents.intelligence + props.character.talents.resistance);
         setTalentsPointsLeft(talentPoints);
     }, [])
 
@@ -73,7 +84,7 @@ const Talents = props => {
                 intelligence,
                 resistance
             },
-            charId
+            charId: props.character._id
         };
         fetch('http://localhost:8000/character/talents', {
             method: 'POST',
@@ -84,7 +95,7 @@ const Talents = props => {
         }).then(res => {
             return res.json();
         }).then(data => {
-            setCharInfo(data);
+            props.setCharacter(data);
         }).catch(err => {
             console.log(err);
         })
@@ -134,5 +145,7 @@ const Talents = props => {
         </div>
     );
 }
+
+const Talents = connect(mapStateToProps, mapDispatchToProps)(ConnectedTalents);
 
 export default Talents;

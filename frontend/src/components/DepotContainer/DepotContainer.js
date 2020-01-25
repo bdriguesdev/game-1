@@ -1,15 +1,26 @@
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
+import { connect } from 'react-redux';
 
 import ItemDetails from '../ItemDetails/ItemDetails';
 import './DepotContainer.css';
 import images from '../../utils/images';
-import MainContext from '../../contexts/MainContext'
+import { setCharacter } from '../../actions/character'
 
-const DepotContainer = props => {
+const mapStateToProps = state => {
+    return {
+        character: state.character
+    };
+};
+
+const mapDispatchToProps = dispatch => {
+    return {
+        setCharacter: character => dispatch(setCharacter(character))
+    };
+};
+
+const ConnectedDepotContainer = props => {
     const [itemInfo, setItemInfo] = useState(null);
     const [slotPosition, setSlotPosition] = useState(null);
-
-    const { charInfo, setCharInfo, charId } = useContext(MainContext);
     
     const handleDragStart = (evt, data) => {
         handleMouseLeave();
@@ -32,7 +43,7 @@ const DepotContainer = props => {
             }
         }
         const bodyRequest = {
-            charId,
+            charId: props.character._id,
             from: {
                 location,
                 position,
@@ -57,7 +68,7 @@ const DepotContainer = props => {
                 console.log(data.error);
                 return;
             }
-            setCharInfo(data.character);
+            props.setCharacter(data.character);
         }).catch(err => {
             console.log(err);
         })
@@ -85,7 +96,7 @@ const DepotContainer = props => {
                 className='inventory-slots'
             >
                 {
-                    charInfo.slots.depot.map((slot, index) => {
+                    props.character.slots.depot.map((slot, index) => {
                         return (
                             <li
                                 key={index}
@@ -95,7 +106,18 @@ const DepotContainer = props => {
                                 onMouseEnter={evt => handleMouseEnter(evt, slot)}
                                 onMouseLeave={handleMouseLeave}
                             >
-                                {slot === 0 ? "" : <p style={{ backgroundImage: `url('${images[slot.id]}')` }} onMouseEnter={evt => handleMouseEnter(evt, slot)} draggable={true} onDragStart={evt => handleDragStart(evt, { location: 'depot', position: index, quantity: slot.quantity})}></p>}
+                                {
+                                    slot === 0 ? 
+                                        "" 
+                                        : 
+                                        <p 
+                                            style={{ backgroundImage: `url('${images[slot.id]}')` }} 
+                                            onMouseEnter={evt => handleMouseEnter(evt, slot)} 
+                                            draggable={true} onDragStart={evt => 
+                                            handleDragStart(evt, { location: 'depot', position: index, quantity: slot.quantity})}
+                                        >
+                                        </p>
+                                }
                             </li>
                         );
                     })
@@ -104,5 +126,7 @@ const DepotContainer = props => {
         </div>
     );
 };
+
+const DepotContainer = connect(mapStateToProps, mapDispatchToProps)(ConnectedDepotContainer);
 
 export default DepotContainer;

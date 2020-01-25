@@ -5,7 +5,7 @@ import Inventory from '../../components/Inventory/Inventory';
 import DepotContainer from '../../components/DepotContainer/DepotContainer';
 import CharacterSVG from '../../assets/Character.svg';
 
-const Depot = props => {
+const Depot = () => {
 
     return (
         <div className="depot-container">
