@@ -1,17 +1,28 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
+import { connect } from 'react-redux';
 
 import './HotkeysBar.css';
-import MainContext from '../../contexts/MainContext.js';
 import ItemDetails from '../ItemDetails/ItemDetails';
 import images from '../../utils/images';
+import { setCharacter } from '../../actions/character';
+ 
+const mapStateToProps = state => {
+    return {
+        character: state.character
+    };
+};
 
-const HotkeysBar = props => {
+const mapDispatchToProps = dispatch => {
+    return {
+        setCharacter: character => dispatch(setCharacter(character))
+    };
+};
+
+const ConnectedHotkeysBar = props => {
     const [isHotkeysExpanded, setIsHotkeysExpanded] = useState(true);
     const [itemInfo, setItemInfo] = useState(null);
     const [slotPosition, setSlotPosition] = useState(null);
     const [spellHotkeys] = useState(['Q', 'W', 'E', 'R', 'T', 'Y']);
-
-    const { charId, charInfo, setCharInfo } = useContext(MainContext);
 
     useEffect(() => {
         document.addEventListener('keyup', handleHotkeysKeys);
@@ -35,7 +46,7 @@ const HotkeysBar = props => {
         };
         const keyPressedInfo = keys[String.fromCharCode(evt.keyCode)];
         if(keyPressedInfo) {
-            const action = charInfo.hotkeys[keyPressedInfo[1]][keyPressedInfo[0]];
+            const action = props.character.hotkeys[keyPressedInfo[1]][keyPressedInfo[0]];
             if(action !== 0) {
                 if(keyPressedInfo[1] === 'potions') {
 
@@ -111,7 +122,7 @@ const HotkeysBar = props => {
             return;
         }
         const requestBody = {
-            charId,
+            charId: props.character._id,
             spell
         }
         fetch('http://localhost:8000/battle/attack', {
@@ -123,10 +134,10 @@ const HotkeysBar = props => {
         }).then(res => {
             return res.json();
         }).then(data => {
-            if (data.character.goldCoins - charInfo.goldCoins > 0) {
-                goldCoinsDropAnimation(data.character.goldCoins - charInfo.goldCoins);
+            if (data.character.goldCoins - props.character.goldCoins > 0) {
+                goldCoinsDropAnimation(data.character.goldCoins - props.character.goldCoins);
             }
-            setCharInfo(data.character);
+            props.setCharacter(data.character);
             if(data.characterAttack.totalDamage > 0) {
                 displayAttackAnimation('enemy', data.characterAttack);
             } 
@@ -164,7 +175,7 @@ const HotkeysBar = props => {
         }
         if(location === 'inventory') {
             const bodyRequest = {
-                charId,
+                charId: props.character._id,
                 from: {
                     location,
                     position,
@@ -189,7 +200,7 @@ const HotkeysBar = props => {
                     console.log(data.error);
                     return;
                 }
-                setCharInfo(data.character);
+                props.setCharacter(data.character);
             }).catch(err => {
                 console.log(err);
             })
@@ -198,7 +209,7 @@ const HotkeysBar = props => {
 
     const handleUseItem = (from) => {
         const bodyRequest = {
-            charId,
+            charId: props.character._id,
             from
         };
         fetch('http://localhost:8000/battle/use/' , {
@@ -214,7 +225,7 @@ const HotkeysBar = props => {
                 console.log(data.error);
                 return;
             }
-            setCharInfo(data.character);
+            props.setCharacter(data.character);
         }).catch(err => {
             console.log(err);
         })
@@ -248,7 +259,7 @@ const HotkeysBar = props => {
                                     <div className="hotkeys-pots">
                                         <ul className='hotkeys-pots-slots'>
                                             {
-                                                charInfo.hotkeys.potions.map((slot, index) => {
+                                                props.character.hotkeys.potions.map((slot, index) => {
                                                     return (
                                                         <li 
                                                             key={index} 
@@ -287,7 +298,7 @@ const HotkeysBar = props => {
                                     <div className="hotkeys-spells">
                                             <ul className="hotkeys-spells-slots">
                                                 {
-                                                    charInfo.hotkeys.spells.map((slot, index) => {
+                                                    props.character.hotkeys.spells.map((slot, index) => {
                                                         return (
                                                             <li 
                                                                 key={index} 
@@ -326,5 +337,7 @@ const HotkeysBar = props => {
         </div>
     );
 };
+
+const HotkeysBar = connect(mapStateToProps, mapDispatchToProps)(ConnectedHotkeysBar);
 
 export default HotkeysBar;
