@@ -1,15 +1,26 @@
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
+import { connect } from 'react-redux';
 
 import ItemDetails from '../ItemDetails/ItemDetails';
 import './Inventory.css';
 import images from '../../utils/images';
-import MainContext from '../../contexts/MainContext';
+import { setCharacter } from '../../actions/character'
 
-const Inventory = props => {
+const mapStateToProps = state => {
+    return {
+        character: state.character
+    };
+};
+
+const mapDispatchToProps = dispatch => {
+    return {
+        setCharacter: character => dispatch(setCharacter(character))
+    };
+};
+
+const ConnectedInventory = props => {
     const [itemInfo, setItemInfo] = useState(null);
     const [slotPosition, setSlotPosition] = useState(null);
-
-    const { charId, charInfo, setCharInfo } = useContext(MainContext);
 
     const handleDragStart = (evt, data) => {
         handleMouseOut();
@@ -34,7 +45,7 @@ const Inventory = props => {
         }
         if(location === 'set') {
             const bodyRequest = {
-                charId,
+                charId: props.character._id,
                 from: {
                     location,
                     position,
@@ -59,13 +70,13 @@ const Inventory = props => {
                     console.log(data.error);
                     return;
                 }
-                setCharInfo(data.character);
+                props.setCharacter(data.character);
             }).catch(err => {
                 console.log(err);
             })
         } else if( location === 'shop') {
             const bodyRequest = {
-                charId,
+                charId: props.character._id,
                 from: {
                     location,
                     position,
@@ -90,13 +101,13 @@ const Inventory = props => {
                     console.log(data.error);
                     return;
                 }
-                setCharInfo(data.character);
+                props.setCharacter(data.character);
             }).catch(err => {
                 console.log(err);
             })
         } else if(location === 'potions') {
             const bodyRequest = {
-                charId,
+                charId: props.character._id,
                 from: {
                     location,
                     position,
@@ -121,13 +132,13 @@ const Inventory = props => {
                     console.log(data.error);
                     return;
                 }
-                setCharInfo(data.character);
+                props.setCharacter(data.character);
             }).catch(err => {
                 console.log(err);
             })
         } else {
             const bodyRequest = {
-                charId,
+                charId: props.character._id,
                 from: {
                     location,
                     position,
@@ -152,7 +163,7 @@ const Inventory = props => {
                     console.log(data.error);
                     return;
                 }
-                setCharInfo(data.character);
+                props.setCharacter(data.character);
             }).catch(err => {
                 console.log(err);
             });
@@ -176,7 +187,7 @@ const Inventory = props => {
 
     const handleUseItem = (from) => {
         const bodyRequest = {
-            charId,
+            charId: props.character._id,
             from
         };
         fetch('http://localhost:8000/battle/use/' , {
@@ -192,7 +203,7 @@ const Inventory = props => {
                 console.log(data.error);
                 return;
             }
-            setCharInfo(data.character);
+            props.setCharacter(data.character);
         }).catch(err => {
             console.log(err);
         });
@@ -203,7 +214,7 @@ const Inventory = props => {
             <ItemDetails itemInfo={itemInfo} slotPosition={slotPosition} />
             <ul className='inventory-slots'>
                 {
-                    charInfo.slots.inventory.map((slot, index) => {
+                    props.character.slots.inventory.map((slot, index) => {
                         return (
                             <li 
                                 data-location={slot === 0? null: 'inventory'} 
@@ -218,7 +229,19 @@ const Inventory = props => {
                                 onMouseEnter={evt => handleMouseOver(evt, slot)}
                                 onMouseLeave={handleMouseOut}
                             >
-                                {slot === 0? "": (<p style={{ backgroundImage: `url('${images[slot.id]}')` }} onDoubleClick={() => handleUseItem({ location: 'inventory', position: index, quantity: slot.quantity })} onMouseEnter={evt => handleMouseOver(evt, slot)} onDragStart={evt => handleDragStart(evt, { location: 'inventory', position: index, quantity: slot.quantity })} draggable='true'></p>)}
+                                {
+                                    slot === 0? 
+                                        ""
+                                        : 
+                                        (<p 
+                                            style={{ backgroundImage: `url('${images[slot.id]}')` }} onDoubleClick={() => 
+                                            handleUseItem({ location: 'inventory', position: index, quantity: slot.quantity })} 
+                                            onMouseEnter={evt => handleMouseOver(evt, slot)} 
+                                            onDragStart={evt => handleDragStart(evt, { location: 'inventory', position: index, quantity: slot.quantity })} 
+                                            draggable='true'
+                                        >
+                                        </p>)
+                                }
                             </li>
                         );
                     })
@@ -227,5 +250,7 @@ const Inventory = props => {
         </div>
     );
 };
+
+const Inventory = connect(mapStateToProps, mapDispatchToProps)(ConnectedInventory);
 
 export default Inventory;

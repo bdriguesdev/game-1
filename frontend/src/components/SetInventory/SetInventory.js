@@ -1,15 +1,26 @@
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
+import { connect } from 'react-redux';
 
 import ItemDetails from '../ItemDetails/ItemDetails';
 import './SetInventory.css';
 import images from '../../utils/images'
-import MainContext from '../../contexts/MainContext';
+import { setCharacter } from '../../actions/character'
 
-const SetInventory = props => {
+const mapStateToProps = state => {
+    return {
+        character: state.character
+    };
+};
+
+const mapDispatchToProps = dispatch => {
+    return {
+        setCharacter: character => dispatch(setCharacter(character))
+    };
+};
+
+const ConnectedSetInventory = props => {
     const [itemInfo, setItemInfo] = useState(null);
     const [slotPosition, setSlotPosition] = useState(null);
-
-    const { charInfo, setCharInfo, charId } = useContext(MainContext);
 
     const handleDragStart = (evt, data) => {
         console.log('start');
@@ -36,7 +47,7 @@ const SetInventory = props => {
             return;
         }
         const bodyRequest = {
-            charId,
+            charId: props.character._id,
             from: {
                 location,
                 position,
@@ -61,7 +72,7 @@ const SetInventory = props => {
                 console.log(data.error);
                 return;
             }
-            setCharInfo(data.character);
+            props.setCharacter(data.character);
         }).catch(err => {
             console.log(err);
         })
@@ -99,10 +110,10 @@ const SetInventory = props => {
                                 key={index}
                                 onDrop={evt => handleDrop(evt, { location: 'set', position: key, quantity: 1 })}
                                 onDragOver={handleDragOver}
-                                onMouseEnter={evt => handleMouseEnter(evt, charInfo.set[key])}
+                                onMouseEnter={evt => handleMouseEnter(evt, props.character.set[key])}
                                 onMouseLeave={handleMouseLeave}
                             >
-                                {charInfo.set[key] === 0 ? <p style={{ backgroundImage: `url('${images[key]}')` }}></p> : <p style={{ backgroundImage: `url('${images[charInfo.set[key].id]}')` }} onMouseEnter={evt => handleMouseEnter(evt, charInfo.set[key])} draggable={true} onDragStart={evt => handleDragStart(evt, { location: 'set', position: key, quantity: 1 })}></p>}
+                                {props.character.set[key] === 0 ? <p style={{ backgroundImage: `url('${images[key]}')` }}></p> : <p style={{ backgroundImage: `url('${images[props.character.set[key].id]}')` }} onMouseEnter={evt => handleMouseEnter(evt, props.character.set[key])} draggable={true} onDragStart={evt => handleDragStart(evt, { location: 'set', position: key, quantity: 1 })}></p>}
                             </li>
                         );
                     })
@@ -111,5 +122,7 @@ const SetInventory = props => {
         </div>
     );
 };
+
+const SetInventory = connect(mapStateToProps, mapDispatchToProps)(ConnectedSetInventory);
 
 export default SetInventory;
