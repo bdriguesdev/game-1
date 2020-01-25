@@ -4,7 +4,7 @@ import './Shop.css';
 import Inventory from '../../components/Inventory/Inventory';
 import ShopContainer from '../../components/ShopContainer/ShopContainer';
 
-const Shop = props => {
+const Shop = () => {
 
     return(
         <div className="shop">

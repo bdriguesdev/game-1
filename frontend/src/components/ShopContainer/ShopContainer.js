@@ -1,17 +1,28 @@
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
+import { connect } from 'react-redux';
 
 import ItemDetails from '../ItemDetails/ItemDetails';
-import MainContext from '../../contexts/MainContext';
 import images from '../../utils/images';
 import shop from '../../utils/shop';
 import './ShopContainer.css';
+import { setCharacter } from '../../actions/character';
 
-const ShopContainer = () => {
+const mapStateToProps = state => {
+    return {
+        character: state.character
+    };
+};
+
+const mapDispatchToProps = dispatch => {
+    return {
+        setCharacter: character => dispatch(setCharacter(character))
+    };
+};
+
+const ConnectedShopContainer = props => {
     const [itemInfo, setItemInfo] = useState(null);
     const [selling, setSelling] = useState(false);
     const [slotPosition, setSlotPosition] = useState(null);
-
-    const { charId, setCharInfo } = useContext(MainContext);
 
     const changeSellingMode = (value) => {
         const sell = document.querySelector('.shop-sell');
@@ -49,7 +60,7 @@ const ShopContainer = () => {
         }
         if(location === 'inventory') {
             const bodyRequest = {
-                charId,
+                charId: props.character._id,
                 from: {
                     location,
                     position,
@@ -74,7 +85,7 @@ const ShopContainer = () => {
                     console.log(data.error);
                     return;
                 }
-                setCharInfo(data.character);
+                props.setCharacter(data.character);
             }).catch(err => {
                 console.log(err);
             })
@@ -137,5 +148,7 @@ const ShopContainer = () => {
         </div>
     );
 };
+
+const ShopContainer = connect(mapStateToProps, mapDispatchToProps)(ConnectedShopContainer);
 
 export default ShopContainer;
