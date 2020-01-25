@@ -1,24 +1,28 @@
-import React, { useContext } from 'react';
+import React from 'react';
+import { connect } from 'react-redux';
 
 import './Character.css';
 import HealthBar from '../../components/Bars/HealthBar';
 import EnergyBar from '../../components/Bars/EnergyBar';
 import ExperienceBar from '../../components/Bars/ExperienceBar';
-import MainContext from '../../contexts/MainContext';
 import Inventory from '../../components/Inventory/Inventory';
 import CharacterSVG from '../../assets/Character.svg';
 
-const Character = props => {
+const mapStateToProps = state => {
+    return {
+        character: state.character
+    };
+};
 
-    const { charInfo } = useContext(MainContext);
+const ConnectedCharacter = props => {
 
     return (
         <div className="character-container">
             <div className='character-info'>
-                <h3>{charInfo.name}</h3>
-                <HealthBar health={charInfo.health} maxHealth={charInfo.maxHealth} />
-                <EnergyBar energy={charInfo.energy} maxEnergy={charInfo.maxEnergy}  />
-                <ExperienceBar experience={charInfo.experience} nextLevel={charInfo.nextLevel} />
+                <h3>{props.character.name}</h3>
+                <HealthBar health={props.character.health} maxHealth={props.character.maxHealth} />
+                <EnergyBar energy={props.character.energy} maxEnergy={props.character.maxEnergy}  />
+                <ExperienceBar experience={props.character.experience} nextLevel={props.character.nextLevel} />
             </div>
             <div className='character-display'>
                 <div className='character-animation'>
@@ -29,5 +33,7 @@ const Character = props => {
         </div>
     )
 }
+
+const Character = connect(mapStateToProps)(ConnectedCharacter);
 
 export default Character;
