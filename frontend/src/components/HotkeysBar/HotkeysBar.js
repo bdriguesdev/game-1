@@ -27,6 +27,7 @@ const ConnectedHotkeysBar = props => {
     const [isHotkeysExpanded, setIsHotkeysExpanded] = useState(true);
     const [itemInfo, setItemInfo] = useState(null);
     const [slotPosition, setSlotPosition] = useState(null);
+    const [spellCooldown, setSpellCooldown] = useState(false);
     const [spellHotkeys] = useState(['Q', 'W', 'E', 'R', 'T', 'Y']);
 
     useEffect(() => {
@@ -55,11 +56,15 @@ const ConnectedHotkeysBar = props => {
             if(action !== 0) {
                 if(keyPressedInfo[1] === 'potions') {
                     props.useItem({ charId: props.character._id, from: { location: 'potions', position: keyPressedInfo[0], quantity: 1 } });
-                } else {
+                } else if(!spellCooldown) {
                     props.attack({ charId: props.character._id, spell: action.hotkey })
                         .then(({ data }) => {
                             displayAnimation(data.character, data.itemsDroppedQuant, data.characterAttack, data.monsterAttack);
                             props.setCharacter(data.character);
+                            setSpellCooldown(true);
+                            setTimeout(() => {
+                                setSpellCooldown(false);
+                            }, 1000);
                         }).catch(err => {
                             console.log(err);
                         });
@@ -127,7 +132,6 @@ const ConnectedHotkeysBar = props => {
     };
 
     const handleAttack = (evt, spell) => {
-        console.log(spell);
         if(spell === 0) {
             console.log('empty');
             return;
@@ -136,13 +140,20 @@ const ConnectedHotkeysBar = props => {
             charId: props.character._id,
             spell
         };
-        props.attack(requestBody)
+        if(!spellCooldown) {
+            console.log(spell);
+            props.attack(requestBody)
             .then(({ data }) => {
                 displayAnimation(data.character, data.itemsDroppedQuant, data.characterAttack, data.monsterAttack);
                 props.setCharacter(data.character);
+                setSpellCooldown(true);
+                setTimeout(() => {
+                    setSpellCooldown(false);
+                }, 1000);
             }).catch(err => {
                 console.log(err);
             });
+        }
     };
 
     const displayAnimation = (character, itemsDroppedQuant, characterAttack, monsterAttack) => {
@@ -293,6 +304,9 @@ const ConnectedHotkeysBar = props => {
                                                                             className="hotkey-spell-icon"
                                                                         >
                                                                             <span className="key-hotkey">{spellHotkeys[index]}</span>
+                                                                            {
+                                                                                spellCooldown && <span className="spell-cooldown"></span>
+                                                                            }
                                                                         </p>)
                                                                 }
                                                             </li>

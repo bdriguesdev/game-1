@@ -44,6 +44,7 @@
 }
 
 .hotkeys-pots-slots p {
+    position: relative;
     width: 100%;
     height: 100%;
     background-size: cover;
@@ -78,6 +79,7 @@
 }
 
 .hotkey-spell-icon {
+    position: relative;
     width: 100%;
     height: 100%;
     background-size: cover;
@@ -98,4 +100,14 @@
     position: relative;
     bottom: -18px;
     right: 8px;
+}
+
+.spell-cooldown {
+    position: absolute;
+    border-radius: 15px;
+    left: 0;
+    top: 0;
+    width: 42px;
+    height: 42px;
+    background-color: rgba(56, 56, 56, 0.678);
 }
