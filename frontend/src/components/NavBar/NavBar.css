@@ -9,6 +9,22 @@
     text-align: left;
 }
 
+.navbar .open_menu {
+    margin: 20px;
+    width: 25px;
+    height: 25px;
+    cursor: pointer;
+    display: none;
+}
+
+.navbar .close_menu {
+    margin: 20px;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    display: none;
+}
+
 .navbar h1 {
     text-align: left;
     padding: 0;
