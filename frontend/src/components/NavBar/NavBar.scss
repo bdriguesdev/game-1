@@ -1,3 +1,5 @@
+@import '../../scss/mixins.scss';
+
 .navbar {
     position: relative;
     background-color: #090F1C;
@@ -7,7 +9,15 @@
     border-right: 1px solid #00A5D9;
     box-shadow: 0px 0px 5px 0px rgba(0, 166, 217, 0.199);
     text-align: left;
+    left: 0;
+    transition: 200ms ease-in-out;
+    @include desktop {
+        position: absolute;
+        left: -200px;
+        height: 100vh;
+    }
 }
+
 
 .navbar .open_menu {
     margin: 20px;
@@ -15,6 +25,20 @@
     height: 25px;
     cursor: pointer;
     display: none;
+    transition: 100ms ease-in-out;
+    @include desktop {
+        display: block;
+        position: absolute;
+        top: 0;
+        right: -100px;
+        z-index: 1;
+    }
+}
+
+nav {
+    position: relative;
+    z-index: 3;
+    background-color: #090F1C;
 }
 
 .navbar .close_menu {
@@ -23,6 +47,12 @@
     height: 30px;
     cursor: pointer;
     display: none;
+    @include desktop {
+        display: block;
+        margin-top: 18px;
+        margin-left: auto;
+        margin-bottom: 0;
+    }
 }
 
 .navbar h1 {
