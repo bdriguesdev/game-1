@@ -28,7 +28,7 @@ const ConnectedEnemy = props => {
                     <p>Elemental resistance: {props.character.battle[0].stats.elementalResistance}</p>
                 </div>
                 <div className="enemy-animation">
-                    <img src={images[props.character.battle[0].name]} alt="Monster" />
+                    <img src={images[props.character.battle[0].name.split(' ').join('')]} alt="Monster" />
                 </div>
             </div>
         </div>

@@ -13,6 +13,11 @@ import id0 from '../assets/0.png';
 import id10 from '../assets/10.png';
 import basicAttack from '../assets/basicAttack.png';
 import Troll from '../assets/Troll.svg';
+import TrollWarrior from '../assets/TrollWarrior.svg';
+import TrollVanguard from '../assets/TrollVanguard.svg';
+import Orc from '../assets/Orc.svg';
+import OrcGuard from '../assets/OrcGuard.svg';
+import OrcBerserker from '../assets/OrcBerserker.svg';
 
 export default {
     bodyArmour,
@@ -29,5 +34,10 @@ export default {
     "0": id0,
     "10": id10,
     basicAttack,
-    Troll
+    Troll,
+    TrollWarrior,
+    TrollVanguard,
+    Orc,
+    OrcGuard,
+    OrcBerserker
 }

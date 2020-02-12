@@ -13,47 +13,72 @@ const router = express.Router();
 // };
 
 // i was storing a monster in the database
-// router.post('/monster', async (req, res) => {
-//     try {
-//     const monster = new Monster({
-//         name: "Monster",
-//         health: 100,
-//         loot: [
-//             { itemId: 0, prob: 20}
-//         ]
-//     })
-//     await monster.save();
-//     res.json({
-//         monster
-//     })
-//     return;
-//     } catch (error) {
-//         console.log(error);
-//     }
-// });
+router.post('/monster', async (req, res) => {
+    try {
+    const monster = new Monster({
+        name: "Orc Berserker",
+        maxHealth: 200,
+        health: 200,
+        experience: 10,
+        gold: {
+            range: [6, 15],
+            prob: 60
+        },
+        spells: {
+            basicAttack: {
+                name: 'Basic Attack',
+                energy: 0,
+                physicalDamage: 100
+            }
+        },
+        stats: {
+            physicalDamage: 25
+        },
+        loot: [
+            { itemId: 3, prob: 25 },
+            { itemId: 6, prob: 5 },
+        ]
+    });
+    await monster.save();
+    res.json({
+        monster
+    });
+    return;
+    } catch (error) {
+        console.log(error);
+    }
+});
 
-//creating a huntingplace in the db
-// router.post('/create', async (req, res) => {
-//     try {
-//         const huntingPlace = new HuntingPlaces({
-//             name: 'Florest',
-//             probability: 100,
-//             monstersList: [
-//                 {
-//                     monsterId:'5d50a9cf4d8eb52c4c80de55',
-//                     prob:[1,100]
-//                 }
-//             ]
-//         });
-//         await huntingPlace.save();
-//         res.json({
-//             message: 'Created!'
-//         });
-//         return;
-//     } catch (error) {
-//         console.log(error);    
-//     }
-// });
+// creating a huntingplace in the db
+router.post('/huntingplace', async (req, res) => {
+    try {
+        const huntingPlace = new HuntingPlaces({
+            name: 'Orcs Village',
+            probability: 100,
+            monstersList: [
+                {
+                    monsterId:'5e4436499913a52b047d3ee0',
+                    prob:[1,50]
+                },
+                {
+                    monsterId:'5e44369951287a4a8c5725e6',
+                    prob:[51,89]
+                },
+                {
+                    monsterId:'5e443745ad9048322499ce8e',
+                    prob:[90,100]
+                }
+            ]
+        });
+        await huntingPlace.save();
+        res.json({
+            message: 'Created!'
+        });
+        return;
+    } catch (error) {
+        console.log(error);    
+    }
+});
 
 // i need to check if the character already has a hunting place
 // or if he have a dungeon i suposed to dont do nothing and alert him(display something the frontend)
