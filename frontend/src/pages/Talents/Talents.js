@@ -107,7 +107,7 @@ const ConnectedTalents = props => {
         <div className="talents-container">
             <h1>Talents</h1>
             <div className="talents-box">
-                <h3>Talents points left {talentsPointsLeft}</h3>
+                <h3>{talentsPointsLeft} talents points left</h3>
                 <div className="talents-stats">
                     <div className="talent-box">
                         <div className="talent-circle str"><p>STR</p></div>
