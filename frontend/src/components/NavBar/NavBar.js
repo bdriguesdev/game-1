@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 
@@ -14,8 +14,31 @@ const mapStateToProps = state => {
 };
 
 const ConnectedNavBar = props => {
+    const [ width, setWidth ] = useState(null);
 
     const { charId } = useContext(MainContext);
+
+    useEffect(() => {
+        setWidth(window.innerWidth);
+        window.addEventListener('resize', changeWidth);
+
+        return () => {
+            window.removeEventListener('resize', changeWidth);
+        }
+    });
+
+    useEffect(() => {
+        let navbar = document.querySelector('.navbar');
+        const openMenuIcon = document.querySelector('.open_menu');
+        if(width > 1250 && navbar.style.left === '-200px') {
+            navbar.style.left = '0px';
+            openMenuIcon.style.display = 'none';
+        }
+    }, [width]);
+
+    const changeWidth = () => {
+        setWidth(window.innerWidth);
+    };
 
     const openMenu = () => {
         const navbar = document.querySelector('.navbar');
