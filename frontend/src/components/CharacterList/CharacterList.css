@@ -1,7 +1,26 @@
 .character {
     background-color: #0C1529;
-    width: 200px;
-    height: 200px;
+    width: 160px;
+    height: 160px;
+    padding: 20px;
     border-radius: 35px;
     color: white;
+    border: 2px solid #0C1529;
+    box-shadow: none;
+    transition: 150ms ease-in-out;
+}
+
+.character h4 {
+    margin: 0;
+    margin-bottom: 10px;
+}
+
+.character p {
+    margin: 3px 0 0 0;
+    text-align: left;
+}
+
+.character:hover {
+    border: 2px solid #00A5D9;
+    box-shadow: 0 0 10px rgba(0, 166, 217, 0.2);
 }

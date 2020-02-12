@@ -18,9 +18,31 @@
     width: 80%;
     margin: 0 auto;
     display: grid;
-    grid-gap: 30px;
+    gap: 20px;
     grid-template-columns: repeat(auto-fit, 200px);
     justify-content: center;
+}
+
+.characters-list .character-create {
+    padding: 20px 20px;
+    background-color: #0C1529;
+    border-radius: 35px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 2px solid #0C1529;
+    box-shadow: none;
+    transition: 150ms ease-in-out;
+}
+
+.characters-list .character-create:hover {
+    border: 2px solid #00A5D9;
+    box-shadow: 0 0 10px rgba(0, 166, 217, 0.2);
+}
+
+.characters-list .character-create img  {
+    width: 60px;
+    height: 60px;
 }
 
 .character-info-container {

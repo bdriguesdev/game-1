@@ -9,6 +9,7 @@ import Inventory from '../../components/Inventory/Inventory';
 import SetInventory from '../../components/SetInventory/SetInventory';
 import CharacterSVG from '../../assets/Character.svg';
 import { setCharacter, getCharacters } from '../../actions/character'
+import plusSVG from '../../assets/add.svg';
 
 const mapStateToProps = state => {
     return {
@@ -52,38 +53,8 @@ const ConnectedHome = props => {
                                 );
                             })
                         }
-                        <div className='character'> 
-                            <h4>Name</h4>
-                            <p>Gold: 0</p>
-                            <p>Level: 1</p>
-                        </div>
-                        <div className='character'> 
-                            <h4>Name</h4>
-                            <p>Gold: 0</p>
-                            <p>Level: 1</p>
-                        </div>
-                        <div className='character'> 
-                            <h4>Name</h4>
-                            <p>Gold: 0</p>
-                            <p>Level: 1</p>
-                        </div>
-                        <div className='character'> 
-                            <h4>Name</h4>
-                            <p>Gold: 0</p>
-                            <p>Level: 1</p>
-                        </div>
-                        <div className='character'> 
-                            <h4>Name</h4>
-                            <p>Gold: 0</p>
-                            <p>Level: 1</p>
-                        </div>
-                        <div className='character'> 
-                            <h4>Name</h4>
-                            <p>Gold: 0</p>
-                            <p>Level: 1</p>
-                        </div>
-                        <Link to='/charcreation' className='character'>
-                            +
+                        <Link to='/charcreation' className='character-create'>
+                            <img src={plusSVG} alt="create"/>
                         </Link>
                         {/* <button onClick={handleClickTest}></button> */}
                         {/* {create button} */}
