@@ -23,6 +23,10 @@ const ConnectedHuntingPlaces = props => {
         {
             name: 'Florest',
             minLevel: 1
+        },
+        {
+            name: 'Orcs Village',
+            minLevel: 3
         }
     ];
 
@@ -59,8 +63,19 @@ const ConnectedHuntingPlaces = props => {
                         return (
                             <div className="hunting-place" key={place.name}>
                                 <h3>{place.name}</h3>
-                                <p>Min. Level: <span style={{ color: props.character.level >= place.minLevel? "#51FF35": "#F00000" }}>{place.minLevel}</span></p>
-                                <button className='btn-inside' onClick={(evt) => handleClick(evt, place.name)}>Join</button>
+                                <p>Min. Level: 
+                                    <span 
+                                        style={{ color: props.character.level >= place.minLevel? "#51FF35": "#F00000" }}
+                                    >
+                                        {' ' + place.minLevel}
+                                    </span>
+                                </p>
+                                <button 
+                                    className='btn-inside' 
+                                    onClick={(evt) => handleClick(evt, place.name)}
+                                >
+                                    Join
+                                </button>
                             </div>
                         );
                     })
