@@ -3,7 +3,9 @@ import { connect } from 'react-redux';
 
 import './Loot.css';
 import images from '../../utils/images';
-import ItemDetails from '../../components/ItemDetails/ItemDetails'
+import ItemDetails from '../../components/ItemDetails/ItemDetails';
+import plusSVG from '../../assets/add.svg';
+import minusSVG from '../../assets/remove.svg';
 
 const mapStateToProps = state => {
     return {
@@ -67,11 +69,16 @@ const ConnectedLoot = props => {
                                     })
                                 }
                             </ul> 
-                            <button className="loot-btn" onClick={handleClick}>-</button> 
+                            <button className="loot-btn" onClick={handleClick}>
+                                <img src={minusSVG} alt="close"/>    
+                            </button> 
                         </React.Fragment>
                     ):
                     (
-                        <button className='loot-btn btn2-size' onClick={handleClick}>Loot +</button>
+                        <button className='loot-btn btn2-size' onClick={handleClick}>
+                            { 'Loot ' }
+                            <img src={plusSVG} alt="open" /> 
+                        </button>
                     )
             }
         </div>

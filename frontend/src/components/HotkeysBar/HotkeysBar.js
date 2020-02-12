@@ -7,6 +7,8 @@ import images from '../../utils/images';
 import { setCharacter } from '../../actions/character';
 import { moveFromPotionsToInv } from '../../actions/inventory';
 import { useItem, attack } from '../../actions/battle';
+import plusSVG from '../../assets/add.svg';
+import minusSVG from '../../assets/remove.svg';
  
 const mapStateToProps = state => {
     return {
@@ -239,7 +241,9 @@ const ConnectedHotkeysBar = props => {
                 isHotkeysExpanded?
                     (
                         <React.Fragment>
-                            <div className='hotkeys-btn' onClick={handleClick}>-</div>
+                            <div className='hotkeys-btn' onClick={handleClick}>
+                                <img src={minusSVG} alt="close"/>
+                            </div>
                             <div className='hotkeys'>
                                 <div className="hotkeys-container-slots" hidden={!isHotkeysExpanded}>
                                     <ItemDetails itemInfo={itemInfo} slotPosition={slotPosition} />
@@ -320,7 +324,10 @@ const ConnectedHotkeysBar = props => {
                         </React.Fragment>
                     ):
                     (
-                        <div className='hotkeys-btn btn-size' onClick={handleClick}>Hotkeys +</div>
+                        <div className='hotkeys-btn btn-size' onClick={handleClick}>
+                            { 'Hotkeys ' }
+                            <img src={plusSVG} alt="open"/>
+                        </div>
                     )
             }
             
