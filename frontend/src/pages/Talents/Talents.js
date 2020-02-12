@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 
 import './Talents.css';
 import { setCharacter } from '../../actions/character';
+import addSVG from '../../assets/add.svg';
+import removeSVG from '../../assets/remove.svg';
 
 const mapStateToProps = state => {
     return {
@@ -110,33 +112,49 @@ const ConnectedTalents = props => {
                     <div className="talent-box">
                         <div className="talent-circle str"><p>STR</p></div>
                         <div className="talent-selector">
-                            <span className="talent-plus" onClick={evt => handleAddClick(evt, 'str')}>+</span>
+                            <span className="talent-plus" onClick={evt => handleAddClick(evt, 'str')}>
+                                <img src={addSVG} alt="Plus" />
+                            </span>
                             <span className='talent-value'>{strength}</span>
-                            <span className="talent-minus" onClick={evt => handleMinusClick(evt, 'str')}>-</span>
+                            <span className="talent-minus" onClick={evt => handleMinusClick(evt, 'str')}>
+                                <img src={removeSVG} alt="Minus" />
+                            </span>
                         </div>
                     </div>
                     <div className="talent-box">
                         <div className="talent-circle dex"><p>DEX</p></div>
                         <div className="talent-selector">
-                            <span className="talent-plus" onClick={evt => handleAddClick(evt, 'dex')}>+</span>
+                            <span className="talent-plus" onClick={evt => handleAddClick(evt, 'dex')}>
+                                <img src={addSVG} alt="Plus" />
+                            </span>
                             <span className='talent-value'>{dexterity}</span>
-                            <span className="talent-minus" onClick={evt => handleMinusClick(evt, 'dex')}>-</span>
+                            <span className="talent-minus" onClick={evt => handleMinusClick(evt, 'dex')}>
+                                <img src={removeSVG} alt="Minus" />
+                            </span>
                         </div>
                     </div>
                     <div className="talent-box">
                         <div className="talent-circle int"><p>INT</p></div>
                         <div className="talent-selector">
-                            <span className="talent-plus" onClick={evt => handleAddClick(evt, 'int')}>+</span>
+                            <span className="talent-plus" onClick={evt => handleAddClick(evt, 'int')}>
+                                <img src={addSVG} alt="Plus" />
+                            </span>
                             <span className='talent-value'>{intelligence}</span>
-                            <span className="talent-minus" onClick={evt => handleMinusClick(evt, 'int')}>-</span>
+                            <span className="talent-minus" onClick={evt => handleMinusClick(evt, 'int')}>
+                                <img src={removeSVG} alt="Minus" />
+                            </span>
                         </div>
                     </div>
                     <div className="talent-box">
                         <div className="talent-circle res"><p>RES</p></div>
                         <div className="talent-selector">
-                            <span className="talent-plus" onClick={evt => handleAddClick(evt, 'res')}>+</span>
+                            <span className="talent-plus" onClick={evt => handleAddClick(evt, 'res')}>
+                                <img src={addSVG} alt="Plus" />
+                            </span>
                             <span className='talent-value'>{resistance}</span>
-                            <span className="talent-minus" onClick={evt => handleMinusClick(evt, 'res')}>-</span>
+                            <span className="talent-minus" onClick={evt => handleMinusClick(evt, 'res')}>
+                                <img src={removeSVG} alt="Minus" />
+                            </span>
                         </div>
                     </div>
                 </div>

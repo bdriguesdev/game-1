@@ -44,6 +44,20 @@
     transform: translateY(-50%);
 }
 
+.talent-selector {
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.talent-selector img {
+    width: 10px;
+    height: 10px;
+    margin: 0 8px;
+    cursor: pointer;
+}
+
 .talents-stats {
     display: flex;
     justify-content: center;
