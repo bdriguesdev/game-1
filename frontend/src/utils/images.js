@@ -10,6 +10,12 @@ import amulet from '../assets/amulet.png';
 import rune from '../assets/rune.png';
 import potions from '../assets/potions.png';
 import id0 from '../assets/0.png';
+import id1 from '../assets/1.png';
+import id2 from '../assets/2.png';
+import id3 from '../assets/3.png';
+import id4 from '../assets/4.png';
+import id5 from '../assets/5.png';
+import id6 from '../assets/6.png';
 import id10 from '../assets/10.png';
 import basicAttack from '../assets/basicAttack.png';
 import Troll from '../assets/Troll.svg';
@@ -32,6 +38,12 @@ export default {
     rune,
     potions,
     "0": id0,
+    "1": id1,
+    "2": id2,
+    "3": id3,
+    "4": id4,
+    "5": id5,
+    "6": id6,
     "10": id10,
     basicAttack,
     Troll,
