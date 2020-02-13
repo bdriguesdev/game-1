@@ -51,24 +51,24 @@
     position: absolute;
     color: lightgray;
     font-size: 16px;
-    animation: eattack 1000ms ease-in-out 1 normal forwards;
+    animation: epattack 1000ms ease-in-out 1 normal forwards;
 }
 
 .enemy-fire-attack {
     position: absolute;
     color: rgb(252, 192, 62);
     font-size: 16px;
-    animation: eattack 1000ms ease-in-out 1 normal forwards;
+    animation: efattack 1000ms ease-in-out 1 normal forwards;
 }
 
 .enemy-lightning-attack {
     position: absolute;
     color: rgb(28, 247, 255);
     font-size: 16px;
-    animation: eattack 1000ms ease-in-out 1 normal forwards;
+    animation: elattack 1000ms ease-in-out 1 normal forwards;
 }
 
-@keyframes eattack {
+@keyframes epattack {
     0% {
         left: 50px;
         top: 30px;
@@ -77,6 +77,32 @@
     100% {
         left: 0px;
         top: 100px;
+        opacity: 0;
+    }
+}
+
+@keyframes efattack {
+    0% {
+        left: 60px;
+        top: 40px;
+        opacity: 1;
+    }
+    100% {
+        left: 10px;
+        top: 110px;
+        opacity: 0;
+    }
+}
+
+@keyframes elattack {
+    0% {
+        left: 40px;
+        top: 20px;
+        opacity: 1;
+    }
+    100% {
+        left: -10px;
+        top: 90px;
         opacity: 0;
     }
 }
