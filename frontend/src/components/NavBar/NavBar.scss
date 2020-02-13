@@ -13,6 +13,7 @@
     transition: 200ms ease-in-out;
     @include desktop {
         position: absolute;
+        z-index: 5;
         left: -200px;
         height: 100vh;
     }
