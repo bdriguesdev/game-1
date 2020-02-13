@@ -1,6 +1,6 @@
 import React from 'react';
 
-import './Shop.css';
+import './Shop.scss';
 import Inventory from '../../components/Inventory/Inventory';
 import ShopContainer from '../../components/ShopContainer/ShopContainer';
 

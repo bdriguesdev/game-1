@@ -1,3 +1,5 @@
+@import '../../scss/mixins.scss';
+
 .shop {
     background-color: #0A1121;
     width: 100%;
@@ -12,6 +14,10 @@
 .shop-container {
     display: flex;
     justify-content: center;
+    @include medium-phone {
+        flex-wrap: wrap;
+        margin: 0 5%;
+    }
 }
 
 .shop-inv-container {
@@ -25,6 +31,9 @@
     border-radius: 35px;
     margin-right: 5%;
     box-shadow: 1px 1px 10px 0px rgba(0, 0, 0, 0.199);
+    @include medium-phone {
+        margin: 20px;
+    }
 }
 
 .shop-vendor-container {
@@ -38,4 +47,7 @@
     border-radius: 35px;
     margin-left: 5%;
     box-shadow: 1px 1px 10px 0px rgba(0, 0, 0, 0.199);
+    @include medium-phone {
+        margin: 20px;
+    }
 }
