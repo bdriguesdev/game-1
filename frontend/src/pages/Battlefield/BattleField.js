@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import './BattleField.css';
+import './BattleField.scss';
 import Character from '../../components/Character/Character';
 import Enemy from '../../components/Enemy/Enemy';
 import Loot from '../../components/Loot/Loot';

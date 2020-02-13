@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 
-import './HotkeysBar.css';
+import './HotkeysBar.scss';
 import ItemDetails from '../ItemDetails/ItemDetails';
 import images from '../../utils/images';
 import { setCharacter } from '../../actions/character';

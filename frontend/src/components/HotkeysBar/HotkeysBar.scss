@@ -1,8 +1,14 @@
+@import '../../scss/mixins.scss';
+
 .hotkeys-container {
     position: fixed;
     bottom: 10px;
     left: calc((100% - 181px) / 2);
     transform: translateX(calc(181px - 45px));
+    @include desktop {
+        left: 50%;
+        transform: translateX(-50%);
+    }
 }
 
 .hotkeys-btn img {
@@ -25,6 +31,10 @@
     bottom: 0;
     left: calc((100% - 181px) / 2);
     transform: translateX(calc(181px - 158px));
+    @include desktop {
+        left: 50%;
+        transform: translateX(-50%);
+    }
 }
 
 .hotkeys-container-slots {

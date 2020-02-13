@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 
-import './Loot.css';
+import './Loot.scss';
 import images from '../../utils/images';
 import ItemDetails from '../../components/ItemDetails/ItemDetails';
 import plusSVG from '../../assets/add.svg';
