@@ -21,8 +21,8 @@ router.post('/login', async (req,res)  => {
         });
         return;
     }
-    // const isPasswordEqual = await bcrypt.compare(password, user.password);
-    const isPasswordEqual = password === user.password;
+    const isPasswordEqual = await bcrypt.compare(password, user.password);
+    // const isPasswordEqual = password === user.password;
     if(!isPasswordEqual) {
         res.json({
             error: 'You need to send an valid email/password!3'
