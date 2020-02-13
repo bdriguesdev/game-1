@@ -84,7 +84,7 @@ const characterSchema = new mongoose.Schema({
         loot: { type: Array, default: [0,0,0,0,0,0,0,0,0,0,0,0] },
         },
     stats: {
-        physicalDamage: { type: Number, default: 3 },
+        physicalDamage: { type: Number, default: 20 },
         criticalChance: { type: Number, default: 0 },
         criticalMultiplier: { type: Number, default: 100 },
         bleedChance: { type: Number, default: 0 },

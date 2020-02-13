@@ -66,7 +66,7 @@ const ConnectedHotkeysBar = props => {
                             setSpellCooldown(true);
                             setTimeout(() => {
                                 setSpellCooldown(false);
-                            }, 1000);
+                            }, 500);
                         }).catch(err => {
                             console.log(err);
                         });
