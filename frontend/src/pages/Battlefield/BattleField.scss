@@ -1,3 +1,5 @@
+@import '../../scss/mixins.scss';
+
 .battlefield {
     background-color: #0A1121;
     width: 100%;
@@ -15,12 +17,21 @@
     top: 50%;
     transform: translateY(-50%);
     width: 100%;
+    @include tablet {
+        flex-direction: column;
+    }
 }
 
 .versus-img {
     font-size: 100px;
     font-weight: 100;
     margin: 0 5vw;
+    @include desktop {
+        margin: 0 2%;
+    }
+    @include tablet {
+        margin-bottom: 12px;
+    }
 }
 
 .battlefield {

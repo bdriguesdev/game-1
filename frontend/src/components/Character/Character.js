@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import './Character.css';
+import './Character.scss';
 import HealthBar from '../../components/Bars/HealthBar';
 import EnergyBar from '../../components/Bars/EnergyBar';
 import ExperienceBar from '../../components/Bars/ExperienceBar';

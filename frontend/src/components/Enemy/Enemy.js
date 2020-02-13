@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import './Enemy.css';
+import './Enemy.scss';
 import HealthBar from '../../components/Bars/HealthBar';
 import images from '../../utils/images';
 

@@ -2,6 +2,7 @@
 
 .loot-container {
     position: fixed;
+    z-index: 10;
     top: 0;
     left: calc((100% - 181px) / 2);
     transform: translateX(calc(181px - 50px));
@@ -14,6 +15,7 @@
 
 .loot-container-active {
     position: fixed;
+    z-index: 10;
     top: 0;
     left: calc((100% - 181px) / 2);
     transform: translateX(calc(181px - 141px));

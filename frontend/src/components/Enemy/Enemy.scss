@@ -1,10 +1,17 @@
+@import '../../scss/mixins.scss';
+
 .enemy-container {
     width: 400px;
-    height: 320px;
     padding: 15px;
     background-color: #0C1529;
     border-radius: 35px;
     box-shadow: 1px 1px 10px 0px rgba(0, 0, 0, 0.199);
+    @include desktop {
+        width: 390px;
+    }
+    @include medium-phone {
+        width: 190px;
+    }
 }
 
 .enemy-info h3 {
@@ -21,6 +28,9 @@
     justify-content: center;
     align-items: center;
     margin-top: 25px;
+    @include medium-phone {
+        flex-direction: column;
+    }
 }
 
 .enemy-animation {
@@ -32,6 +42,9 @@
     display: flex;
     align-items: center;;
     justify-content: center;
+    @include tablet {
+        height: 200px;
+    }
 }
 
 .enemy-physical-attack {

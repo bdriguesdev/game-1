@@ -1,28 +1,43 @@
+@import '../../scss/mixins.scss';
+
 .character-container {
     position: relative;
     width: 400px;
     padding: 15px;
-    height: 320px;
     background-color: #0C1529;
     border-radius: 35px;
     box-shadow: 1px 1px 10px 0px rgba(0, 0, 0, 0.199);
+    @include desktop {
+        width: 390px;
+    }
+    @include tablet {
+        margin-top: 100px;
+    }
+    @include medium-phone {
+        width: 190px;
+    }
 }
 
 .character-animation {
     position: relative;
     width: 150px;
-    height: 220px;
     border-radius: 45px;
     margin-right: 10px;
     display: flex;
     align-items: center;;
     justify-content: center;
+    @include tablet {
+    }
 }
 
 .character-display {
+    margin-top: 20px;
     display: flex;
     justify-content: center;
     align-items: center;
+    @include medium-phone {
+        flex-direction: column;
+    }
 }
 
 .character-gold-drop {

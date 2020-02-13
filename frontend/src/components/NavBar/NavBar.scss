@@ -54,6 +54,9 @@ nav {
         margin-left: auto;
         margin-bottom: 0;
     }
+    @include medium-phone {
+        margin-top: 28px;
+    }
 }
 
 .navbar h1 {
