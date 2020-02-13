@@ -1,3 +1,5 @@
+@import '../../scss/mixins.scss';
+
 .home {
     background-color: #0A1121;
     width: 100%;
@@ -47,10 +49,13 @@
 
 .character-info-container {
     background-color: #0C1529;
-    width: 500px;
+    display: inline-block;
     margin: 0 auto;
     padding: 20px;
     border-radius: 35px;
+    @include medium-phone {
+        margin: 0 5%;
+    }
 }
 
 td {
@@ -60,6 +65,9 @@ td {
 
 table:last-child {
     margin-left: 40px;
+    @include medium-phone {
+        margin-left: 0;
+    }
 }
 
 td:nth-child(n) {
@@ -74,6 +82,9 @@ td:nth-child(2n) {
 .character-info-tables {
     display: flex;
     justify-content: center;
+    @include medium-phone {
+        flex-wrap: wrap;
+    }
 }
 
 .character-info-display {
@@ -81,6 +92,9 @@ td:nth-child(2n) {
     display: flex;
     justify-content: center;
     align-items: center;
+    @include medium-phone {
+        flex-wrap: wrap;
+    }
 }
 
 .character-info-container .character-animation {

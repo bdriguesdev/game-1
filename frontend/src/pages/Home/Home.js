@@ -2,7 +2,7 @@ import React, { useContext, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-import './Home.css'
+import './Home.scss'
 import MainContext from '../../contexts/MainContext.js';
 import CharacterList from '../../components/CharacterList/CharacterList';
 import Inventory from '../../components/Inventory/Inventory';
