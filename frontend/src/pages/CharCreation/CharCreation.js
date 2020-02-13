@@ -44,7 +44,6 @@ const CharCreation = props => {
 
     return (
         <div className='character-creation'>
-            <h3>name: {name}</h3>
             <form onSubmit={handleSubmit}>
                 <input
                     name='name'

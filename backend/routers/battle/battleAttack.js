@@ -250,11 +250,9 @@ const battle = async (character, spell) => {
     //each turn the character receive 1 energy
     character.energy += character.energy + 1 <= 10? 1: 0;
     if(newCharacterHealth <= 0) {
-        //send msg that the character is dead?
-        res.json({
-            error: 'The character is dead, I need to do something about this hm'
-        });
-        return;
+        character.health = character.maxHealth;
+        character.goldCoins = parseInt(character.goldCoins * 0.8);
+        character.slots.inventory = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
     }
     //send the information back to the player?
     return {
