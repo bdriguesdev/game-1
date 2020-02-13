@@ -22,6 +22,31 @@
     }
 }
 
+.empty-battle {
+    width: 400px;
+    height: 337px;
+    padding: 0 15px;
+    background-color: #0C1529;
+    border-radius: 35px;
+    box-shadow: 1px 1px 10px 0px rgba(0, 0, 0, 0.199);
+    @include desktop {
+        width: 390px;
+    }
+    @include medium-phone {
+        width: 190px;
+    }
+}
+
+.empty-battle p {
+    position: relative;
+    top: 50%;
+    margin: 0 auto;
+    transform: translateY(-50%);
+    font-size: 1.6rem;
+    margin: 0;
+    color: rgba(180, 180, 180, 0.253);
+}
+
 .versus-img {
     font-size: 100px;
     font-weight: 100;

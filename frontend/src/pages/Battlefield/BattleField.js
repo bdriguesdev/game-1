@@ -23,8 +23,14 @@ const ConnectedBattleField = props => {
                 <div className='versus-img'>X</div>
                 {
                     props.character.battle[0] ? 
-                        (<Enemy />):
-                        (<p>Nothing here</p>)
+                        (
+                            <Enemy />
+                        ):
+                        ( 
+                            <div className="empty-battle">
+                                <p>You need to choose a hunting place.</p>
+                            </div>
+                        )
                 }
                 
             </div>
