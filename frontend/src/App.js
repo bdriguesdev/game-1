@@ -6,7 +6,6 @@ import './App.css';
 import Login from './pages/Login/Login';
 import Register from './pages/Register/Register';
 import NavBar from './components/NavBar/NavBar';
-import About from './pages/About/About';
 import BattleField from './pages/Battlefield/BattleField';
 import HuntingPlaces from './pages/HuntingPlaces/HuntingPlaces';
 import Home from './pages/Home/Home';
@@ -43,16 +42,14 @@ function ConnectedApp(props) {
               <Redirect exact from="/" to='/login' key='0'/>,
               <Route path="/login" component={Login} key='1'/>,
               <Route path="/register" component={Register} key='2'/>,
-              <Route path="/about" component={About} key='3'/>,
-              <Redirect from='*' to='/login' key='4'/>
+              <Redirect from='*' to='/login' key='3'/>
             ])}
             {props.token && !charId && ([
               <Redirect exact from="/" to='/home' key='0'/>,
               <Redirect exact from="/login" to='/home' key='1'/>,
               <Route path='/home' component={Home} key='2'/>,
               <Route path='/charcreation' component={CharCreation} key='3'/>,
-              <Route path="/about" component={About} key='4'/>,
-              <Redirect from='*' to='/home' key='5'/>
+              <Redirect from='*' to='/home' key='4'/>
             ])}
             {props.token && charId && ([
               <Redirect exact from="/" to='/home' key='0'/>,
@@ -60,10 +57,9 @@ function ConnectedApp(props) {
               <Route path='/charcreation' component={CharCreation} key='2'/>,
               <Route path='/huntingplaces' component={HuntingPlaces} key='3'/>,
               <Route path="/battlefield" component={BattleField} key='4'/>,
-              <Route path="/about" component={About} key='5'/>,
-              <Route path="/talents" component={Talents} key='6'/>,
-              <Route path="/depot" component={Depot} key='7'/>,
-              <Route path="/shop" component={Shop} key='8'/>,
+              <Route path="/talents" component={Talents} key='5'/>,
+              <Route path="/depot" component={Depot} key='6'/>,
+              <Route path="/shop" component={Shop} key='7'/>,
               <Redirect from='*' to='/home' key='8'/>
             ])}
             {/* <Redirect exact from="/" to='/login' />
