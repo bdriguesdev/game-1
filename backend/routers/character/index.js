@@ -6,9 +6,8 @@ const User = require('../../models/User');
 const router = express.Router();
 
 router.post('/create', async (req, res) => {
-    // create a handle and validate for invalid body or the creation of user ( email,,, vocation,.. etc) 
     const { userId, name} = req.body;
-    console.log(userId);
+
     if(!userId) {
         res.json({
             error: 'You need to send a valid user ID!'
@@ -28,13 +27,21 @@ router.post('/create', async (req, res) => {
             name,
             vocation: 'warrior'
         });
-        //character.stats.physicalDamage = 20;
+        character.hotkeys.spells[0] = {
+            name: 'Basic Attack',
+            energy: 0,
+            physicalDamage: 100,
+            elementalDamage: 50,
+            bleedChance: 0,
+            criticalChance: 0,
+            criticalMultiplier: 0,
+            hotkey: 'basicAttack'
+        };
         await character.save();
         user.characters.push(character._id);
         await user.save();
         res.json({
-            message: 'Character created!',
-            character
+            message: 'Character created!'
         });
         return;
 

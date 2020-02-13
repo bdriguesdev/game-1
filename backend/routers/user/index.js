@@ -41,7 +41,7 @@ router.post('/user/create', async (req, res) => {
     return;
 });
 
-router.post('/user/characterslist', async (req, res, next) => {
+router.post('/user/characterslist', async (req, res) => {
     const { userId } = req.body;
     try {
         const user = await User.findById(userId).populate('characters');
@@ -51,7 +51,6 @@ router.post('/user/characterslist', async (req, res, next) => {
             });
             return;
         }
-        console.log('here');
         res.json(user.characters);
         return;
     } catch (error) {

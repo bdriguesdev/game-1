@@ -58,7 +58,8 @@ const characterSchema = new mongoose.Schema({
             elementalDamage: { type: Number, default: 50 },
             bleedChance: { type: Number, default: 0 },
             criticalChance: { type: Number, default: 0 },
-            criticalMultiplier: { type: Number, default: 0 }
+            criticalMultiplier: { type: Number, default: 0 },
+            hotkey: { type: String, default: 'basicAttack' } 
         }
     },
     hotkeys : {

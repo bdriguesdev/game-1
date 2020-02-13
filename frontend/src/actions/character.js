@@ -24,3 +24,23 @@ export function getCharacters(userId) {
         });
     }
 };
+
+export function createCharacter(userId, name) {
+    return function(dispatch) {
+        return axios({
+            method: 'post',
+            url: 'http://localhost:8000/character/create',
+            data: {
+                name,
+                userId
+            }
+        })
+        .then(({ data }) => {
+            if(data.message) return true;
+            else return false;
+        })
+        .catch(err => {
+            console.log(err);
+        })
+    }
+}

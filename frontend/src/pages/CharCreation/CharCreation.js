@@ -1,12 +1,23 @@
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
+import { connect } from 'react-redux';
 
-import MainContext from '../../contexts/MainContext';
+import { createCharacter } from '../../actions/character';
 import './CharCreation.css';
 
-const CharCreation = props => {
-    const [name, setName] = useState('');
+const mapStateToProps = state => {
+    return {
+        userId: state.userId
+    }
+};
 
-    const { userId, setCharId, setCharInfo } = useContext(MainContext);
+const mapDispatchToProps = dispatch => {
+    return {
+        createCharacter: (userId, name) => dispatch(createCharacter(userId, name)),
+    };
+};
+
+const ConnectedCharCreation = props => {
+    const [name, setName] = useState('');
 
     const handleChange = evt => {
         const { name, value } = evt.target;
@@ -17,29 +28,11 @@ const CharCreation = props => {
 
     const handleSubmit = evt => {
         evt.preventDefault();
-        const requestBody = {
-            userId,
-            name
-        };
-        fetch('http://localhost:8000/character/create', {
-            method: 'POST',
-            body: JSON.stringify(requestBody),
-            headers: {
-                'Content-Type': 'application/json'
+        props.createCharacter(props.userId, name).then((isCharacterCreated) => {
+            if(isCharacterCreated) {
+                props.history.push('/home');
             }
-        }).then(res => {
-            return res.json()
-        }).then(data => {
-            if(data.error){
-                console.log(data.error);
-                return;
-            }
-            setCharId(data.character._id);
-            setCharInfo(data.character);
-            console.log(data);
-        }).catch(err => {
-            console.log(err);
-        })
+        });
     }
 
     return (
@@ -58,5 +51,7 @@ const CharCreation = props => {
         </div>
     );
 };
+
+const CharCreation = connect(mapStateToProps, mapDispatchToProps)(ConnectedCharCreation);
 
 export default CharCreation;

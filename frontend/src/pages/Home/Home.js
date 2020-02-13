@@ -8,7 +8,7 @@ import CharacterList from '../../components/CharacterList/CharacterList';
 import Inventory from '../../components/Inventory/Inventory';
 import SetInventory from '../../components/SetInventory/SetInventory';
 import CharacterSVG from '../../assets/Character.svg';
-import { setCharacter, getCharacters } from '../../actions/character'
+import { setCharacter, getCharacters } from '../../actions/character';
 import plusSVG from '../../assets/add.svg';
 
 const mapStateToProps = state => {
