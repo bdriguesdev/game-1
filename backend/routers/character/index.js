@@ -47,11 +47,7 @@ router.post('/create', async (req, res) => {
     
 });
 
-router.post('/set', async (req, res, next) => {
-    //
-    //  WHAT HAPPEN IF IM REMOVING A ITEM FROM SET TO INV => DO THE SCRIPT PUT 0 IN THE SLOT?
-    //  I ALSO NEED TO CREATE THE SET INSIDE THE CHARACTER MODEL
-    //
+router.post('/set', async (req, res) => {
     const { charId, from, to } = req.body;
     try {
         let character = await Character.findById(charId);
@@ -95,7 +91,7 @@ router.post('/set', async (req, res, next) => {
         if(oldItemSet !== 0) {
             oldItemSet.base.forEach(statInfo => {
                 if(statInfo.stat === 'health') {
-                    character.health -= statInfo.value;
+                    character.maxHealth -= statInfo.value;
                 }
                 else {
                     character.stats[statInfo.stat] -= statInfo.value;
@@ -103,7 +99,7 @@ router.post('/set', async (req, res, next) => {
             });
             oldItemSet.stats.forEach(statInfo => {
                 if(statInfo.stat === 'health') {
-                    character.health -= statInfo.value;
+                    character.maxHealth -= statInfo.value;
                 }
                 else {
                     character.stats[statInfo.stat] -= statInfo.value;
@@ -114,7 +110,7 @@ router.post('/set', async (req, res, next) => {
         if(newItemSet !== 0) {
             newItemSet.base.forEach(statInfo => {
                 if(statInfo.stat === 'health') {
-                    character.health += statInfo.value;
+                    character.maxHealth += statInfo.value;
                 }
                 else {
                     character.stats[statInfo.stat] += statInfo.value;
@@ -122,7 +118,7 @@ router.post('/set', async (req, res, next) => {
             });
             newItemSet.stats.forEach(statInfo => {
                 if(statInfo.stat === 'health') {
-                    character.health += statInfo.value;
+                    character.maxHealth += statInfo.value;
                 }
                 else {
                     character.stats[statInfo.stat] += statInfo.value;
