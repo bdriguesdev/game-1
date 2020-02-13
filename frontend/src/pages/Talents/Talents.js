@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 
-import './Talents.css';
+import './Talents.scss';
 import { setCharacter } from '../../actions/character';
 import addSVG from '../../assets/add.svg';
 import removeSVG from '../../assets/remove.svg';

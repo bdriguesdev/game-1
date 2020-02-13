@@ -1,7 +1,13 @@
+@import '../../scss/mixins.scss';
+
 .talents-container {    
     background-color: #0A1121;
     width: 100%;
     color: white;
+    margin: 0 5%;
+    @include small-phone {
+        margin: 0 2%;
+    }
 }
 
 .talents-container h1 {
@@ -16,10 +22,22 @@
     margin: 0 auto;
     border-radius: 35px;
     box-shadow: 1px 1px 10px 0px rgba(0, 0, 0, 0.199);
+    @include medium-phone {
+        width: 260px;
+    }
+    @include small-phone {
+        width: 130px;
+    }
 }
 
 .talent-box {
     margin-right: 3rem;
+    @include large-phone {
+        margin-right: 2rem;
+    }
+    @include medium-phone {
+        margin: 10px;
+    }
 }
 
 .talent-box:last-child {
@@ -61,4 +79,7 @@
 .talents-stats {
     display: flex;
     justify-content: center;
+    @include medium-phone {
+        flex-wrap: wrap;
+    }
 }
