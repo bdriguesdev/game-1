@@ -7,6 +7,8 @@
 .hunting-places-container {
     display: flex;
     justify-content: center;
+    margin: 0 5%;
+    flex-wrap: wrap;
 }
 
 .hunting-place {
