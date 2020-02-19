@@ -1,4 +1,5 @@
 # :computer: Game
+Demo: https://bdriguesgame.herokuapp.com/ <br>
 The objective of this project was to create a game using React and NodeJS + MongoDB on the backend to maintain all the logic of the game. Every crucial interaction of the game is performed on the backend with a database, including the inventory system,  making the game safer against cheating.
 
 
